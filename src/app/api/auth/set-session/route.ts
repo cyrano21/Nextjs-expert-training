@@ -1,23 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import type { Database } from '@/types/supabase';
 
 export async function POST(request: NextRequest) {
   const { access_token, refresh_token } = await request.json();
 
-  const response = NextResponse.json({ success: true });
+  const supabase = createRouteHandlerClient<Database>({ cookies });
 
-  response.cookies.set('sb-access-token', access_token, {
-    path: '/',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-  });
+  const { error } = await supabase.auth.setSession({ access_token, refresh_token });
 
-  response.cookies.set('sb-refresh-token', refresh_token, {
-    path: '/',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-  });
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 
-  return response;
+  return NextResponse.json({ success: true });
 }
