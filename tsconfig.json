@@ -1,34 +1,40 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "rehype-prism-plus": ["./src/types/rehype-prism-plus.d.ts"],
+      "remark-gfm": ["./src/types/remark-gfm.d.ts"]
+    },
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "types": ["node", "rehype-prism-plus", "remark-gfm"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "vitest.config.ts",
-    "vitest-setup.d.ts"
+    "src/types/**/*.d.ts"
   ],
- "exclude": ["node_modules", ".next", ".next/types"]
+  "exclude": [
+    "node_modules"
+  ]
 }

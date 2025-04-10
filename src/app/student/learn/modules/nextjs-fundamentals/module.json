@@ -1,0 +1,22 @@
+{
+    "id": "nextjs-fundamentals-01",
+    "title": "Introduction à Next.js",
+    "description": "Découvrez les bases de Next.js et créez votre première application web moderne",
+    "difficulty": "débutant",
+    "duration": "30 minutes",
+    "prerequisites": ["HTML", "JavaScript", "React"],
+    "learningObjectives": [
+        "Comprendre les concepts de base de Next.js",
+        "Créer un nouveau projet Next.js",
+        "Explorer la structure d'un projet Next.js",
+        "Créer des composants simples"
+    ],
+    "tags": ["next.js", "react", "web development", "frontend"],
+    "lessons": [
+        {
+            "id": "introduction",
+            "title": "Premiers Pas avec Next.js",
+            "content": "01-introduction-to-nextjs.mdx"
+        }
+    ]
+}

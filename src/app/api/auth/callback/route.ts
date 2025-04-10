@@ -1,105 +1,55 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { createServerSupabaseClient } from '@/services/supabase/server'
-import { cookies } from 'next/headers'
-import type { Database } from '@/types/database.types';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* stylelint-disable */
 
-type ProfileInsert = Database['public']['Tables']['profiles']['Insert']
-type ProgressInsert = Database['public']['Tables']['user_progress']['Insert']
+import { NextResponse } from "next/server";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import type { Database } from "@/types/database.types";
 
-export async function GET(request: NextRequest) {
-  try {
-    const requestUrl = new URL(request.url)
-    const code = requestUrl.searchParams.get('code')
-    const redirectTo = requestUrl.searchParams.get('redirect') || '/student/dashboard'
+export const dynamic = "force-dynamic";
 
-    if (!code) {
-      console.error('Aucun code d\'authentification fourni')
-      return NextResponse.redirect(new URL('/', requestUrl.origin))
-    }
-
-    const supabase = await createServerSupabaseClient()
-    const { data: sessionData, error: sessionError } = await supabase.auth.exchangeCodeForSession(code)
-
-    if (sessionError || !sessionData?.session) {
-      console.error('Erreur lors de l\'échange du code:', sessionError)
-      return NextResponse.redirect(
-        new URL(`/auth/login?error=session_error&redirect=${encodeURIComponent(redirectTo)}`, requestUrl.origin)
-      )
-    }
-
-    const session = sessionData.session
-    const user = session.user
-
-    const { data: profileData } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single()
-
-    if (!profileData) {
-      const fullName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0]
-
-      const profileInsert: ProfileInsert = {
-        id: user.id,
-        full_name: fullName ?? '',
-        role: 'student',
-        avatar_url: user.user_metadata?.avatar_url || null,
-        points: 0,
-        current_streak: 0,
-        last_active_date: new Date().toISOString(),
-        badges: [],
-        updated_at: new Date().toISOString(),
-        username: null,
-        website: null,
-      }
-
-      await supabase.from('profiles').insert([profileInsert])
-
-      const progressInsert: ProgressInsert = {
-        user_id: user.id,
-        item_type: 'lesson',
-        item_slug: 'intro',
-        status: 'not_started',
-        started_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }
-
-      await supabase.from('user_progress').insert([progressInsert])
-
-      console.log('Nouveau profil créé pour:', user.email)
-    }
-
-    const cookieStore = await cookies()
-    const accessToken = cookieStore.get('sb-access-token')
-    const refreshToken = cookieStore.get('sb-refresh-token')
-
-    const response = NextResponse.redirect(new URL(redirectTo, requestUrl.origin))
-
-    if (!accessToken) {
-      response.cookies.set('sb-access-token', session.access_token, {
-        path: '/',
-        httpOnly: true,
-        maxAge: 60 * 60 * 24 * 7,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-      })
-    }
-
-    if (!refreshToken) {
-      response.cookies.set('sb-refresh-token', session.refresh_token, {
-        path: '/',
-        httpOnly: true,
-        maxAge: 60 * 60 * 24 * 30,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-      })
-    }
-
-    return response
-  } catch (error) {
-    console.error('Erreur lors du callback d\'authentification:', error)
+export async function GET(request: Request) {
+  // Journaliser pour le débogage
+  console.log("Callback OAuth appelé");
+  
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get("code");
+  const redirectTo = requestUrl.searchParams.get("redirect") || "/student/dashboard";
+  
+  if (!code) {
+    console.error("No code provided in callback");
     return NextResponse.redirect(
-      new URL('/auth/login?error=auth_callback_error', request.url)
-    )
+      new URL("/auth/login?message=Paramètres%20de%20callback%20invalides", requestUrl.origin)
+    );
+  }
+  
+  try {
+    // Créer un client Supabase pour le handler de route
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore });
+    
+    // Échanger le code d'autorisation contre une session
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    
+    if (error) {
+      console.error("Erreur lors de l'échange du code:", error);
+      return NextResponse.redirect(
+        new URL("/auth/login?message=Échec%20de%20l%27authentification", requestUrl.origin)
+      );
+    }
+    
+    // Journaliser le succès
+    console.log("Session créée avec succès:", data?.session ? "Session valide" : "Pas de session");
+    
+    // Authentification réussie, rediriger vers la destination demandée
+    return NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
+    
+  } catch (error: any) {
+    console.error("Erreur dans le callback d'authentification:", error?.message || error);
+    return NextResponse.redirect(
+      new URL("/auth/login?message=Erreur%20inattendue", requestUrl.origin)
+    );
   }
 }
+/* stylelint-enable */
+/* eslint-enable @typescript-eslint/no-explicit-any */

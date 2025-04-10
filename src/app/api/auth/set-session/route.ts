@@ -1,18 +1,30 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import type { Database } from '@/types/supabase';
+import { NextRequest, NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
-  const { access_token, refresh_token } = await request.json();
+  try {
+    const { session } = await request.json();
+    const cookieStore = await cookies();
+    
+    // Définir le cookie d'authentification
+    if (session) {
+      cookieStore.set('sb-xurpenqrhqwtdkmmkkyp-auth-token', JSON.stringify(session), {
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60 * 24 * 7, // 7 jours
+        sameSite: 'lax'
+      });
+    } else {
+      // Si pas de session, supprimer le cookie
+      cookieStore.delete('sb-xurpenqrhqwtdkmmkkyp-auth-token');
+    }
 
-  const supabase = createRouteHandlerClient<Database>({ cookies });
-
-  const { error } = await supabase.auth.setSession({ access_token, refresh_token });
-
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Erreur lors de la définition de la session:', error);
+    return NextResponse.json({ error: 'Échec de la définition de la session' }, { status: 500 });
   }
-
-  return NextResponse.json({ success: true });
 }

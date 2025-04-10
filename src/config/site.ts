@@ -3,6 +3,18 @@ export const siteConfig = {
   description: "Devenez un expert certifié Next.js avec notre plateforme d'apprentissage interactive.",
   url: "https://nextjs-expert-academy.com",
   ogImage: "https://nextjs-expert-academy.com/og.jpg",
+  keywords: [
+    "Next.js",
+    "React",
+    "Web Development",
+    "Online Learning",
+    "Programming Courses",
+    "Full-Stack Development",
+    "JavaScript",
+    "TypeScript",
+    "Frontend",
+    "Backend"
+  ],
   links: {
     twitter: "https://twitter.com/nextjsacademy",
     github: "https://github.com/nextjs-expert-academy",

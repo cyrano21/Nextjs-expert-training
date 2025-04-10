@@ -1,0 +1,19 @@
+{
+  "id": "01-introduction",
+  "title": "Introduction à Next.js",
+  "slug": "01-introduction",
+  "description": "Découvrez ce qu'est Next.js et pourquoi c'est un framework révolutionnaire pour le développement web",
+  "tags": [
+    "next.js",
+    "framework",
+    "web development"
+  ],
+  "level": "Beginner",
+  "estimatedTimeMinutes": 30,
+  "objectives": [
+    "Comprendre ce qu'est Next.js",
+    "Connaître les avantages de Next.js",
+    "Installer votre premier projet Next.js"
+  ],
+  "content": "# Introduction à Next.js\n\nNext.js est un framework React qui permet de créer des applications web complètes, avec rendu côté serveur, génération de sites statiques, et plus encore.\n\n## Pourquoi utiliser Next.js?\n\n- Performance optimisée\n- SEO amélioré\n- Expérience développeur exceptionnelle"
+}

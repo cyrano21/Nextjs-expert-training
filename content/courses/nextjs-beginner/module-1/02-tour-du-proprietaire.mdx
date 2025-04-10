@@ -1,0 +1,100 @@
+---
+title: Tour du Propriétaire - Structure du Projet Next.js
+description: Exploration détaillée de la structure d'un projet Next.js et comprendre le rôle de chaque dossier et fichier
+tags: 
+  - next.js
+  - project structure
+  - configuration
+estimatedTimeMinutes: 45
+objectives:
+  - Comprendre la structure d'un projet Next.js
+  - Identifier le rôle des principaux dossiers et fichiers
+  - Naviguer efficacement dans un projet Next.js
+---
+
+# Tour du Propriétaire : Comprendre la Structure d'un Projet Next.js
+
+## Structure de Base
+
+```
+mon-projet/
+├── app/
+│   ├── layout.tsx
+│   └── page.tsx
+├── public/
+├── components/
+├── next.config.js
+├── package.json
+└── tsconfig.json
+```
+
+## Exploration Détaillée
+
+### 📁 Dossier `app/`
+Le cœur de votre application Next.js 13+
+- `layout.tsx` : Mise en page commune
+- `page.tsx` : Page d'accueil principale
+- Routage basé sur la structure des fichiers
+
+### 📁 Dossier `public/`
+Ressources statiques
+- Images
+- Fichiers
+- Polices
+- Icônes
+
+### 📁 Dossier `components/`
+Composants réutilisables
+- Boutons
+- Cartes
+- Éléments d'interface
+
+### 📄 `next.config.js`
+Configuration avancée de Next.js
+- Plugins
+- Redirections
+- Configurations personnalisées
+
+### 📄 `package.json`
+Gestion des dépendances
+- Scripts npm
+- Versions des packages
+
+### 📄 `tsconfig.json`
+Configuration TypeScript
+- Règles de typage
+- Chemins d'importation
+
+## Activité Interactive
+
+### Défi : Identification des Rôles
+
+Faites glisser chaque élément vers son rôle correct :
+- `app/` → [Routage et pages]
+- `public/` → [Ressources statiques]
+- `components/` → [Composants réutilisables]
+
+## Quiz de Validation
+
+1. Quel fichier définit la mise en page globale ?
+   - [ ] `page.tsx`
+   - [x] `layout.tsx`
+   - [ ] `next.config.js`
+
+2. Où placeriez-vous un logo de votre site ?
+   - [x] Dossier `public/`
+   - [ ] Dossier `app/`
+   - [ ] Dossier `components/`
+
+## Conseils Pro
+
+- Gardez `app/` organisé
+- Utilisez des sous-dossiers pour les grandes applications
+- Séparez la logique des composants
+
+## Ressources Supplémentaires
+
+- [Next.js App Router](https://nextjs.org/docs/app)
+- [Project Structure Guide](https://nextjs.org/docs/getting-started/project-structure)
+
+**Exploration Terminée !** 🕵️‍♂️ Vous comprenez maintenant la structure d'un projet Next.js !

@@ -28,12 +28,12 @@ export async function fetchDashboardData(
         verified: !!userExists 
       },
       progress: { overallCompletion: 42, currentStreak: 3, points: 850 },
-      nextLesson: { title: 'Understanding Server Components', slug: 'nextjs-advanced/01-server-components', course: 'Next.js Advanced' },
-      currentProject: { title: 'Portfolio Site Enhancement', slug: 'portfolio-v2', progress: 65 },
+      nextLesson: { title: 'Understanding Server Components', moduleId: 'nextjs-advanced/01-server-components', course: 'Next.js Advanced' },
+      currentProject: { title: 'Portfolio Site Enhancement', moduleId: 'portfolio-v2', progress: 65 },
       recentBadge: { name: 'CSS Wizard', id: 'css-mastery' },
       communityActivity: [
-        { type: 'forum', text: 'Debating RSC vs Client Components...', slug: 'forum/789' },
-        { type: 'showcase', text: 'JaneDoe shared an animation project!', slug: 'showcase/anim-proj-1' }
+        { type: 'forum', text: 'Debating RSC vs Client Components...', moduleId: 'forum/789' },
+        { type: 'showcase', text: 'JaneDoe shared an animation project!', moduleId: 'showcase/anim-proj-1' }
       ]
     };
   } catch (error) {

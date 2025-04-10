@@ -1,74 +1,87 @@
-import React from 'react';
-import { Header } from '@/components/navigation/header';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { Award, Calendar, Clock, Download, FileText, Settings } from 'lucide-react';
-import { FallbackImg } from '@/components/ui/fallback-img';
+import React from "react";
+import { Header } from "@/components/navigation/header";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import {
+  Award,
+  Calendar,
+  Clock,
+  Download,
+  FileText,
+  Settings,
+} from "lucide-react";
+import { FallbackImg } from "@/components/ui/fallback-img";
 
 export default function ProfilePage() {
   // Données simulées pour la page de profil
   const student = {
-    name: 'Thomas Dubois',
-    email: 'thomas.dubois@example.com',
-    joinedDate: '15 janvier 2024',
+    name: "Thomas Dubois",
+    email: "thomas.dubois@example.com",
+    joinedDate: "15 janvier 2024",
     level: 3,
     totalPoints: 1250,
     completedLessons: 18,
     completedModules: 2,
-    profileImage: '/avatars/student-1.png',
-    bio: 'Développeur web passionné par les technologies modernes. Je suis actuellement en train d\'apprendre Next.js pour améliorer mes compétences en développement frontend.',
+    profileImage: "/avatars/student-1.png",
+    bio: "Développeur web passionné par les technologies modernes. Je suis actuellement en train d'apprendre Next.js pour améliorer mes compétences en développement frontend.",
   };
 
   const certificates = [
     {
-      id: 'cert-1',
-      title: 'Next.js Fundamentals',
-      issuedDate: '10 février 2024',
-      imageUrl: '/certificates/nextjs-fundamentals.png',
+      id: "cert-1",
+      title: "Next.js Fundamentals",
+      issuedDate: "10 février 2024",
+      imageUrl: "/certificates/nextjs-fundamentals.png",
     },
     {
-      id: 'cert-2',
-      title: 'Styling et UI',
-      issuedDate: '5 mars 2024',
-      imageUrl: '/certificates/styling-ui.png',
+      id: "cert-2",
+      title: "Styling et UI",
+      issuedDate: "5 mars 2024",
+      imageUrl: "/certificates/styling-ui.png",
     },
   ];
 
   const achievements = [
     {
-      id: 'ach-1',
-      title: 'Premier pas',
-      description: 'Compléter votre première leçon',
-      earnedDate: '16 janvier 2024',
+      id: "ach-1",
+      title: "Premier pas",
+      description: "Compléter votre première leçon",
+      earnedDate: "16 janvier 2024",
       icon: <Award className="h-5 w-5 text-amber-500" />,
     },
     {
-      id: 'ach-2',
-      title: 'Apprenti Next.js',
+      id: "ach-2",
+      title: "Apprenti Next.js",
       description: 'Compléter le module "Next.js Fundamentals"',
-      earnedDate: '10 février 2024',
+      earnedDate: "10 février 2024",
       icon: <Award className="h-5 w-5 text-emerald-500" />,
     },
     {
-      id: 'ach-3',
-      title: 'Designer UI',
+      id: "ach-3",
+      title: "Designer UI",
       description: 'Compléter le module "Styling et UI"',
-      earnedDate: '5 mars 2024',
+      earnedDate: "5 mars 2024",
       icon: <Award className="h-5 w-5 text-indigo-500" />,
     },
     {
-      id: 'ach-4',
-      title: 'Assiduité',
-      description: 'Se connecter 7 jours consécutifs',
-      earnedDate: '22 janvier 2024',
+      id: "ach-4",
+      title: "Assiduité",
+      description: "Se connecter 7 jours consécutifs",
+      earnedDate: "22 janvier 2024",
       icon: <Calendar className="h-5 w-5 text-blue-500" />,
     },
     {
-      id: 'ach-5',
-      title: 'Marathonien',
-      description: 'Compléter 5 leçons en une journée',
-      earnedDate: '28 janvier 2024',
+      id: "ach-5",
+      title: "Marathonien",
+      description: "Compléter 5 leçons en une journée",
+      earnedDate: "28 janvier 2024",
       icon: <Clock className="h-5 w-5 text-purple-500" />,
     },
   ];
@@ -112,27 +125,43 @@ export default function ProfilePage() {
                       </div>
                       <div className="rounded-lg bg-muted p-3 text-center">
                         <p className="text-sm text-muted-foreground">Points</p>
-                        <p className="text-2xl font-bold">{student.totalPoints}</p>
+                        <p className="text-2xl font-bold">
+                          {student.totalPoints}
+                        </p>
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Leçons complétées</span>
-                        <span className="font-medium">{student.completedLessons}</span>
+                        <span className="text-sm text-muted-foreground">
+                          Leçons complétées
+                        </span>
+                        <span className="font-medium">
+                          {student.completedLessons}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Modules complétés</span>
-                        <span className="font-medium">{student.completedModules}</span>
+                        <span className="text-sm text-muted-foreground">
+                          Modules complétés
+                        </span>
+                        <span className="font-medium">
+                          {student.completedModules}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Membre depuis</span>
-                        <span className="font-medium">{student.joinedDate}</span>
+                        <span className="text-sm text-muted-foreground">
+                          Membre depuis
+                        </span>
+                        <span className="font-medium">
+                          {student.joinedDate}
+                        </span>
                       </div>
                     </div>
 
                     <div className="pt-2">
-                      <p className="text-sm text-muted-foreground">{student.bio}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {student.bio}
+                      </p>
                     </div>
 
                     <Button variant="outline" className="w-full">
@@ -182,7 +211,9 @@ export default function ProfilePage() {
                               {achievement.icon}
                             </div>
                             <div>
-                              <h3 className="font-medium">{achievement.title}</h3>
+                              <h3 className="font-medium">
+                                {achievement.title}
+                              </h3>
                               <p className="text-sm text-muted-foreground">
                                 {achievement.description}
                               </p>
@@ -222,7 +253,9 @@ export default function ProfilePage() {
                               />
                             </div>
                             <div className="flex-1 text-center sm:text-left">
-                              <h3 className="text-lg font-medium">{certificate.title}</h3>
+                              <h3 className="text-lg font-medium">
+                                {certificate.title}
+                              </h3>
                               <p className="text-sm text-muted-foreground">
                                 Délivré le {certificate.issuedDate}
                               </p>
@@ -242,7 +275,9 @@ export default function ProfilePage() {
                         {certificates.length === 0 && (
                           <div className="flex flex-col items-center justify-center py-12 text-center">
                             <FileText className="mb-4 h-12 w-12 text-muted-foreground/30" />
-                            <h3 className="text-lg font-medium">Aucun certificat pour le moment</h3>
+                            <h3 className="text-lg font-medium">
+                              Aucun certificat pour le moment
+                            </h3>
                             <p className="mt-1 text-sm text-muted-foreground">
                               Complétez des modules pour obtenir des certificats
                             </p>
@@ -265,35 +300,58 @@ export default function ProfilePage() {
                     <CardContent>
                       <div className="space-y-6">
                         <div>
-                          <h3 className="mb-4 text-lg font-medium">Informations personnelles</h3>
+                          <h3 className="mb-4 text-lg font-medium">
+                            Informations personnelles
+                          </h3>
                           <div className="grid gap-4 sm:grid-cols-2">
                             <div className="space-y-2">
-                              <label className="text-sm font-medium">Nom</label>
+                              <label
+                                htmlFor="profileName"
+                                className="text-sm font-medium"
+                              >
+                                Nom
+                              </label>
                               <input
+                                id="profileName"
                                 type="text"
                                 className="w-full rounded-md border bg-background px-3 py-2"
                                 defaultValue={student.name}
+                                aria-label="Nom complet"
+                                placeholder="Votre nom complet"
                               />
                             </div>
                             <div className="space-y-2">
-                              <label className="text-sm font-medium">Email</label>
+                              <label
+                                htmlFor="profileEmail"
+                                className="text-sm font-medium"
+                              >
+                                Email
+                              </label>
                               <input
+                                id="profileEmail"
                                 type="email"
                                 className="w-full rounded-md border bg-background px-3 py-2"
                                 defaultValue={student.email}
+                                aria-label="Adresse email"
+                                placeholder="votre@email.com"
                               />
                             </div>
                           </div>
                         </div>
 
                         <div>
-                          <h3 className="mb-4 text-lg font-medium">Préférences</h3>
+                          <h3 className="mb-4 text-lg font-medium">
+                            Préférences
+                          </h3>
                           <div className="space-y-4">
                             <div className="flex items-center justify-between">
                               <div>
-                                <p className="font-medium">Notifications par email</p>
+                                <p className="font-medium">
+                                  Notifications par email
+                                </p>
                                 <p className="text-sm text-muted-foreground">
-                                  Recevoir des emails sur les nouveaux modules et mises à jour
+                                  Recevoir des emails sur les nouveaux modules
+                                  et mises à jour
                                 </p>
                               </div>
                               <div className="h-6 w-11 rounded-full bg-muted p-1">

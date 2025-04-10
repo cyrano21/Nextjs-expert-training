@@ -1,41 +1,53 @@
 // 📄 src/middleware.ts
 
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-// Middleware simplifié pour éviter les problèmes de compilation
-export function middleware(request: NextRequest) {
-  // Récupérer le chemin actuel
+export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Chemin protégé qui nécessite une authentification
-  const isProtectedRoute = pathname.startsWith('/student/') || 
-                           pathname.startsWith('/instructor/') || 
-                           pathname.startsWith('/admin/');
-                           
-  // Vérifier la présence d'un cookie d'authentification (simplifié)
-  const hasAuthCookie = request.cookies.has('sb-access-token');
+  // Vérifier si on accède à une page protégée
+  const isProtectedRoute = 
+    pathname.startsWith('/student/') || 
+    pathname.startsWith('/instructor/') || 
+    pathname.startsWith('/admin/');
   
-  // Si c'est une route protégée et qu'il n'y a pas de cookie d'authentification
-  if (isProtectedRoute && !hasAuthCookie) {
-    // Créer l'URL de redirection avec le chemin actuel comme paramètre
-    const redirectUrl = new URL('/auth/login', request.url);
-    redirectUrl.searchParams.set('redirect', pathname);
+  // Ajouter une vérification pour les routes de contenu éducatif MDX
+  const isEducationalContentRoute = 
+    pathname.includes('/learn/modules/') || 
+    pathname.includes('/courses/content/');
+
+  // Si c'est une route protégée, vérifier l'authentification
+  if (isProtectedRoute || isEducationalContentRoute) {
+    // Obtenir la session depuis les cookies
+    const session = request.cookies.get('session')?.value;
     
-    return NextResponse.redirect(redirectUrl);
+    if (!session) {
+      // Rediriger vers la page de connexion avec l'URL de redirection
+      const redirectUrl = new URL('/auth/login', request.url);
+      redirectUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(redirectUrl);
+    }
+    
+    // Pour les routes éducatives, on pourrait ajouter une vérification
+    // supplémentaire pour s'assurer que l'étudiant est inscrit au cours
+    if (isEducationalContentRoute) {
+      // Logique de vérification d'inscription au module/cours spécifique
+      // À implémenter selon votre système d'inscription
+    }
   }
   
-  // Continuer la requête normalement
   return NextResponse.next();
 }
 
-// Limiter l'exécution du middleware à certains chemins
+// Configurer les routes où le middleware doit être exécuté
 export const config = {
   matcher: [
-    // Chemins pour lesquels le middleware s'exécutera
     '/student/:path*',
     '/instructor/:path*',
     '/admin/:path*',
-    '/api/protected/:path*',
+    '/learn/modules/:path*',
+    '/courses/content/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };

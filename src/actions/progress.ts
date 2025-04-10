@@ -19,11 +19,9 @@ export interface UserProgressData {
   currentLesson: string;
   totalPoints: number;
   level: number;
-  moduleProgress?: {
+  progress?: {
     [moduleId: string]: {
-      completedLessons: string[];
-      progress: number;
-      totalLessons: number;
+      [lessonId: string]: boolean;
     }
   };
   achievements?: string[];
@@ -155,11 +153,10 @@ export async function getUserProgress(userId: string) {
       currentLesson: 'module-1/lesson-3',
       totalPoints: 120,
       level: 2,
-      moduleProgress: {
+      progress: {
         'module-1': {
-          completedLessons: ['module-1/lesson-1', 'module-1/lesson-2'],
-          progress: 66,
-          totalLessons: 3,
+          'lesson-1': true,
+          'lesson-2': true,
         },
       },
       achievements: ['achievement-1', 'achievement-2'],

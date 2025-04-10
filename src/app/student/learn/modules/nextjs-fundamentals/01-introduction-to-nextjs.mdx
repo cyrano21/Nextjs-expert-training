@@ -1,0 +1,95 @@
+import { CodeBlock } from "@/components/mdx/CodeBlock";
+import { Quiz } from "@/components/mdx/Quiz";
+import { InfoTip } from "@/components/mdx/InfoTip";
+import { TerminalOutput } from "@/components/mdx/TerminalOutput";
+import { ProjectStep } from "@/components/mdx/ProjectStep";
+import { FileTree } from "@/components/mdx/FileTree";
+import { AchievementUnlocked } from "@/components/mdx/AchievementUnlocked";
+
+# Introduction à Next.js : Votre Première Application Web Moderne
+
+<InfoTip>
+Next.js est un framework React puissant qui simplifie le développement d'applications web full-stack avec un rendu côté serveur et client.
+</InfoTip>
+
+## Commencer un Nouveau Projet Next.js
+
+<TerminalOutput>
+npx create-next-app@latest mon-premier-projet
+cd mon-premier-projet
+npm run dev
+</TerminalOutput>
+
+<ProjectStep title="Configuration Initiale">
+Créons un nouveau projet Next.js avec la dernière version. La commande ci-dessus :
+1. Crée un nouveau projet
+2. Se déplace dans le dossier du projet
+3. Lance le serveur de développement
+</ProjectStep>
+
+## Structure du Projet
+
+<FileTree 
+    structure={[
+        { name: 'mon-premier-projet', type: 'folder', children: [
+            { name: 'app', type: 'folder', children: [
+                { name: 'page.tsx', type: 'file' },
+                { name: 'layout.tsx', type: 'file' }
+            ]},
+            { name: 'components', type: 'folder' },
+            { name: 'public', type: 'folder' },
+            { name: 'package.json', type: 'file' }
+        ]}
+    ]}
+/>
+
+<InfoTip variant="warning">
+Le dossier `app` est le cœur de votre application Next.js 13+, utilisant le routage basé sur les fichiers.
+</InfoTip>
+
+## Exemple de Composant Next.js
+
+<CodeBlock language="typescript">
+{`export default function HomePage() {
+  return (
+    <div>
+      <h1>Bienvenue dans Next.js !</h1>
+      <p>Une application web moderne et performante.</p>
+    </div>
+  )
+}`}
+</CodeBlock>
+
+## Quiz de Compréhension
+
+<Quiz 
+    question="Quel est l'avantage principal de Next.js ?"
+    options={[
+        "Performances de rendu",
+        "Routage automatique",
+        "Génération de sites statiques",
+        "Tout ce qui précède"
+    ]}
+    correctAnswer={3}
+    explanation="Next.js offre des performances optimisées, un routage simple et la possibilité de générer des sites statiques ou dynamiques."
+/>
+
+## Défi Pratique
+
+<ProjectStep title="Créer Une Page Personnalisée">
+1. Ouvrez `app/page.tsx`
+2. Personnalisez le contenu avec votre propre message
+3. Ajoutez un composant simple
+4. Observez les changements en temps réel
+</ProjectStep>
+
+<AchievementUnlocked 
+    title="Maîtrise des Bases de Next.js" 
+    description="Vous avez créé votre première page et compris les concepts fondamentaux !"
+/>
+
+## Prochaines Étapes
+
+<InfoTip>
+Continuez à explorer Next.js, expérimentez avec les composants, et construisez des applications web modernes et performantes !
+</InfoTip>

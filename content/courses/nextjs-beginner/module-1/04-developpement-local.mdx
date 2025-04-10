@@ -1,0 +1,109 @@
+---
+title: Développement Local avec Next.js
+description: Maîtriser le serveur de développement, Fast Refresh et les outils de développement
+tags: 
+  - next.js
+  - development
+  - tools
+  - fast refresh
+estimatedTimeMinutes: 45
+objectives:
+  - Comprendre le serveur de développement Next.js
+  - Utiliser Fast Refresh
+  - Maîtriser les outils de développement du navigateur
+---
+
+# Développement Local : Votre Terrain de Jeu Next.js
+
+## Lancement du Serveur de Développement 🚀
+
+```bash
+# Commande standard
+npm run dev
+
+# Que fait cette commande ?
+# - Lance un serveur local
+# - Active le Hot Reloading
+# - Compile votre code en temps réel
+```
+
+### Caractéristiques Clés
+- Écoute sur `http://localhost:3000`
+- Rechargement instantané
+- Affichage des erreurs détaillées
+
+## Fast Refresh : La Magie du Développement Instantané ✨
+
+```tsx
+// app/page.tsx
+export default function Page() {
+  return (
+    <div>
+      {/* Modifiez ce texte, voyez le changement immédiat ! */}
+      <h1>Bonjour, Développeur Next.js !</h1>
+    </div>
+  );
+}
+```
+
+### Comment Fast Refresh Fonctionne
+- Mise à jour en direct du code
+- Préserve l'état des composants
+- Aucun rechargement complet de page
+
+## Outils de Développement du Navigateur 🕵️
+
+### Inspecteur d'Éléments
+- Clic droit → "Inspecter"
+- Exploration de la structure HTML
+- Modification des styles en direct
+
+### Console JavaScript
+- Affichage des logs
+- Débogage des erreurs
+- Interaction avec votre application
+
+## Activité Interactive : Chasse au Trésor 🏴‍☠️
+
+1. Lancez votre serveur de développement
+2. Modifiez le texte dans `app/page.tsx`
+3. Observez le changement instantané
+4. Trouvez un message caché dans la console !
+
+## Commandes Utiles
+
+```bash
+# Démarrer le serveur
+npm run dev
+
+# Build de production
+npm run build
+
+# Lancer en production
+npm start
+```
+
+## Quiz de Validation
+
+1. Que fait `npm run dev` ?
+   - [ ] Construit l'application pour la production
+   - [x] Lance un serveur de développement local
+   - [ ] Supprime les dépendances
+
+2. Qu'est-ce que Fast Refresh ?
+   - [ ] Un nouveau framework
+   - [x] Mise à jour instantanée du code
+   - [ ] Un outil de compression
+
+## Conseils Pro 💡
+
+- Gardez la console ouverte
+- Utilisez les points d'arrêt
+- Explorez les onglets Réseau et Performance
+
+## Ressources Supplémentaires
+
+- [Next.js Development Documentation](https://nextjs.org/docs/basic-features/fast-refresh)
+- [Chrome DevTools Guide](https://developers.google.com/web/tools/chrome-devtools)
+
+**Mission Accomplie !** 🎉 Vous maîtrisez maintenant votre environnement de développement Next.js !

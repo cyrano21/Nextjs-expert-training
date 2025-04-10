@@ -1,46 +1,55 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
-import { MainNav } from "./main-nav";
-import { Button } from "../ui/button";
+import { usePathname } from "next/navigation";
+import { UserNav } from "@/components/navigation/user-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui/logo";
 
 export function Header() {
-  const navItems = [
-    {
-      title: "Dashboard",
-      href: "/student/dashboard",
-    },
-    {
-      title: "Roadmap",
-      href: "/student/roadmap",
-    },
-    {
-      title: "Learn",
-      href: "/student/learn",
-    },
-    {
-      title: "Projects",
-      href: "/student/projects",
-    },
-    {
-      title: "Lab",
-      href: "/student/lab",
-    },
+  const pathname = usePathname();
+
+  // Navigation items avec les liens corrects
+  const navigationItems = [
+    { name: "Tableau de bord", href: "/student/dashboard" },
+    { name: "Cours", href: "/student/courses" },
+    { name: "Apprentissage", href: "/student/learn" },
+    { name: "Roadmap", href: "/student/roadmap" },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-        <MainNav items={navItems} />
-        <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/auth/login">Login</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link href="/auth/register">Sign Up</Link>
-            </Button>
-          </nav>
+    <header className="sticky top-0 z-50 flex h-16 items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex items-center justify-between">
+        <div className="hidden md:block">
+          <Logo />
+        </div>
+
+        <nav className="hidden gap-6 md:flex">
+          {navigationItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-foreground/80",
+                pathname?.startsWith(item.href)
+                  ? "text-foreground"
+                  : "text-foreground/60"
+              )}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <UserNav />
         </div>
       </div>
     </header>
   );
 }
+
+// Assurez-vous que tous les liens utilisent moduleId au lieu de moduleId

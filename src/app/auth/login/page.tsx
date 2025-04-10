@@ -1,251 +1,231 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { supabase } from "@/lib/supabase-client";
-import { getRedirectPathByRole, getWelcomeMessageByRole } from "@/utils/roles";
-import { toast } from "sonner";
-import { AlertTriangle, Code } from "lucide-react";
-
-// UI Components
+import Link from "next/link";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "@/components/ui/button";
-import {
-  Card, CardContent, CardDescription, CardFooter,
-  CardHeader, CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { SocialLoginButton } from "@/components/auth/SocialLoginButton";
+import type { Database } from "@/types/database.types";
 
-// 👇 METTRE ÇA ICI, APRÈS LES IMPORTS
-export const dynamic = 'force-dynamic';
-
-
-export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+export default function Login() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/student/dashboard";
 
-  useEffect(() => {
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session) {
-        const role = session.user?.user_metadata?.role ?? 'student';
-        const redirectPath = getRedirectPathByRole(role);
-        router.push(redirectPath);
-      }
-    };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message] = useState<string | null>(
+    searchParams.get("message") || null
+  );
 
-    checkSession();
-  }, [router]);
-  
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const supabase = createClientComponentClient<Database>();
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setIsLoading(true);
+    setLoading(true);
+    setError(null);
 
     try {
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (signInError) {
-        setError(signInError.message || 'Login failed. Please check your credentials.');
-        setIsLoading(false);
+      if (error) {
+        setError(error.message);
         return;
       }
 
-      if (data.user) {
-        // Log détaillé pour vérifier le rôle
-        console.log('Données utilisateur après connexion:', {
-          user: {
-            email: data.user.email,
-            metadata: data.user.user_metadata,
-            hasRole: !!data.user.user_metadata?.role
-          }
-        });
-
-        // Vérifier et définir un rôle par défaut si non présent
-        let role = data.user.user_metadata?.role;
-
-        if (!role) {
-          console.log('Aucun rôle défini, attribution du rôle par défaut');
-          const { error: updateError } = await supabase.auth.updateUser({
-            data: { role: 'student' }
-          });
-
-          if (updateError) {
-            console.error('Erreur lors de la mise à jour du rôle:', updateError);
-            setError('Impossible de définir votre rôle. Veuillez réessayer.');
-            setIsLoading(false);
-            return;
-          }
-
-          // Mettre à jour le rôle après la mise à jour
-          role = 'student';
+      if (data?.user) {
+        // Vérifier si l'utilisateur est confirmé
+        if (!data.user.email_confirmed_at) {
+          setError("Veuillez vérifier votre email pour confirmer votre compte");
+          return;
         }
 
-        toast.success(getWelcomeMessageByRole(role), {
-          description: `Redirecting you to your ${role} dashboard...`,
-          duration: 3000,
-        });
+        // Récupérer le rôle de l'utilisateur depuis les métadonnées
+        const role = data.user.user_metadata?.role || "student";
 
-        const redirectAfterLogin = searchParams.get('redirect') || getRedirectPathByRole(role);
-        
-        setTimeout(() => {
-          router.push(redirectAfterLogin);
-        }, 1500);
-      } else {
-        setError("An unexpected issue occurred during login.");
+        // Redirection spécifique selon le rôle
+        const roleRedirects = {
+          student: "/student/dashboard",
+          instructor: "/instructor/dashboard",
+          admin: "/admin/dashboard",
+        };
+
+        const finalRedirect =
+          roleRedirects[role as keyof typeof roleRedirects] || redirectTo;
+        router.push(finalRedirect);
       }
-
-      setIsLoading(false);
-    } catch (catchError: unknown) {
-      setError('An unexpected error occurred. Please try again.');
-      console.error("Login catch error:", catchError);
-      setIsLoading(false);
+    } catch (err) {
+      console.error("Erreur de connexion:", err);
+      setError(
+        "Une erreur inattendue est survenue. Veuillez réessayer plus tard."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+  const handleGoogleLogin = async () => {
+    setLoading(true);
 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleGoogleSignIn = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
+        provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?redirect=/student/dashboard`,
-          scopes: 'email profile'
-        }
+          redirectTo: `${window.location.origin}/api/auth/callback?redirect=${redirectTo}`,
+        },
       });
 
       if (error) {
-        toast.error('Erreur de connexion Google', {
-          description: error.message
-        });
+        setError(error.message);
       }
-    } catch (err) {
-      console.error('Erreur lors de la connexion Google:', err);
-      toast.error('Une erreur est survenue');
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error 
+          ? err.message 
+          : "Une erreur est survenue lors de la connexion"
+      );
+    } finally {
+      setLoading(false);
     }
   };
-  
+
+  // Amélioration du message d'erreur affiché
+  const renderErrorMessage = (errorMsg: string) => {
+    // Mappez les messages d'erreur de Supabase à des messages plus conviviaux
+    const errorMap: Record<string, string> = {
+      "Invalid login credentials":
+        "Identifiants invalides. Vérifiez votre email et mot de passe.",
+      "Email not confirmed":
+        "Veuillez vérifier votre email pour confirmer votre compte.",
+      "Invalid email": "Adresse email invalide.",
+    };
+
+    return errorMap[errorMsg] || errorMsg;
+  };
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 p-4 selection:bg-primary/20">
-      <Card className="w-full max-w-md overflow-hidden rounded-xl border-border/30 bg-background/80 shadow-xl backdrop-blur-lg">
-        <CardHeader className="space-y-2 p-8 text-center">
-          <div className="mb-4 inline-flex rounded-full bg-primary/10 p-3">
-            <Code className="h-8 w-8 text-primary" />
-          </div>
-          <CardTitle className="text-3xl font-bold tracking-tight text-foreground">
-            Welcome Back!
-          </CardTitle>
-          <CardDescription className="text-muted-foreground pt-1">
-            Sign in to continue your Next.js journey.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="px-8 pb-6">
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {error && (
-              <div className="flex items-center gap-2 rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
-                <AlertTriangle className="h-5 w-5 flex-shrink-0" />
-                <span className="break-words">{error}</span>
-              </div>
-            )}
+    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
+          Connectez-vous à votre compte
+        </h2>
+      </div>
 
-            <div className="space-y-1.5">
-              <Label htmlFor="email" className="text-muted-foreground">
-                Email Address
-              </Label>
-              <Input
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-6" onSubmit={handleLogin}>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
+            >
+              Adresse email
+            </label>
+            <div className="mt-2">
+              <input
                 id="email"
+                name="email"
                 type="email"
-                value={email}
-                onChange={handleEmailChange}
-                required
-                placeholder="you@example.com"
-                disabled={isLoading}
                 autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
+          </div>
 
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-muted-foreground">
-                  Password
-                </Label>
+          <div>
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
+              >
+                Mot de passe
+              </label>
+              <div className="text-sm">
                 <Link
                   href="/auth/reset-password"
-                  className="-my-1 rounded px-2 py-1 text-sm text-primary/90 hover:text-primary hover:bg-primary/10 transition-colors"
-                  tabIndex={-1}
+                  className="font-semibold text-indigo-600 hover:text-indigo-500"
                 >
-                  Forgot password?
+                  Mot de passe oublié ?
                 </Link>
               </div>
-              <Input
+            </div>
+            <div className="mt-2">
+              <input
                 id="password"
+                name="password"
                 type="password"
-                value={password}
-                onChange={handlePasswordChange}
-                required
-                placeholder="••••••••"
-                disabled={isLoading}
                 autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
+          </div>
 
+          {error && (
+            <div className="text-red-500 text-sm mt-2">
+              {renderErrorMessage(error)}
+            </div>
+          )}
+
+          {message && (
+            <div className="text-green-500 text-sm mt-2">{message}</div>
+          )}
+
+          <div>
             <Button
               type="submit"
-              className="w-full text-md font-semibold"
-              disabled={isLoading}
-              size="lg"
+              className="flex w-full justify-center"
+              disabled={loading}
             >
-              Sign In
+              {loading ? "Connexion en cours..." : "Se connecter"}
             </Button>
-          </form>
-        </CardContent>
+          </div>
+        </form>
 
-        <CardFooter className="flex flex-col space-y-5 bg-background/50 px-8 py-6 border-t border-border/30">
-          <div className="relative w-full">
+        <div className="mt-6">
+          <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-border/50" />
+              <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background/50 px-2 text-muted-foreground">
-                Or continue with
+            <div className="relative flex justify-center text-sm">
+              <span className="bg-white dark:bg-gray-900 px-2 text-gray-500 dark:text-gray-400">
+                Ou continuer avec
               </span>
             </div>
           </div>
 
-          <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
-            <SocialLoginButton provider="google" onClick={handleGoogleSignIn} />
-            <SocialLoginButton provider="github" />
-          </div>
-
-          <div className="pt-2 text-center text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <Link
-              href="/auth/register"
-              className="font-medium text-primary/90 hover:text-primary hover:underline underline-offset-4 transition-colors"
+          <div className="mt-6">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={handleGoogleLogin}
+              disabled={loading}
             >
-              Sign Up
-            </Link>
+              Connexion avec Google
+            </Button>
           </div>
-        </CardFooter>
-      </Card>
+        </div>
+
+        <p className="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
+          Pas encore de compte ?{" "}
+          <Link
+            href="/auth/signup"
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Créer un compte
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
