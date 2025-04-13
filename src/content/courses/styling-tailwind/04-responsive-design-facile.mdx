@@ -1,0 +1,30 @@
+---
+title: "Responsive Design Facile avec Tailwind"
+description: "Adapter facilement vos interfaces à différentes tailles d'écran"
+---
+
+# Responsive Design Facile avec Tailwind
+
+Tailwind rend le responsive design incroyablement facile grâce à ses préfixes de breakpoints.
+
+## Les breakpoints par défaut
+
+- `sm:` - 640px et plus
+- `md:` - 768px et plus
+- `lg:` - 1024px et plus
+- `xl:` - 1280px et plus
+- `2xl:` - 1536px et plus
+
+## Utilisation
+
+```html
+<div class="
+  flex-col      <!-- Par défaut (mobile): Disposition en colonne -->
+  sm:flex-row   <!-- À partir de 640px: Disposition en ligne -->
+  lg:justify-center  <!-- À partir de 1024px: Centré horizontalement -->
+">
+  <!-- Contenu -->
+</div>
+```
+
+Cette approche "mobile-first" signifie que vous définissez d'abord le style pour mobile, puis les modifications pour les écrans plus grands.

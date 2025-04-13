@@ -1,0 +1,67 @@
+---
+title: "Gestion d'Événements : Répondre aux Actions Utilisateur"
+description: "Apprenez à rendre vos composants interactifs en répondant aux clics, aux saisies clavier et autres événements utilisateur en React."
+tags: ['react', 'events', 'onclick', 'onchange', 'state', 'beginner', 'interactivity', 'hooks']
+estimatedTimeMinutes: 20
+objectives:
+  - Attacher des gestionnaires d'événements (event handlers) aux éléments JSX (ex: `onClick`).
+  - Définir des fonctions de gestion d'événements dans un composant.
+  - Comprendre l'objet événement (`e`).
+  - Gérer les événements de changement sur les inputs (`onChange`) pour contrôler les formulaires.
+  - (Activité) Créer un champ de saisie contrôlé.
+---
+
+import { InfoTip, CodeBlock, Quiz, ProjectStep, InteractiveCodeEditor } from '@/components/mdx';
+
+# Rendre l'UI Vivante : Gestion des Événements ! 🖱️⌨️
+
+Nos composants savent maintenant *avoir* un état (`useState`), mais comment cet état peut-il **changer** en réponse à ce que fait l'utilisateur ? Si l'utilisateur **clique** sur un bouton, **tape** dans un champ, ou **survole** un élément, nous voulons que notre composant réagisse !
+
+C'est le rôle de la **gestion d'événements** en React. C'est très similaire à la façon dont on le fait en HTML et JavaScript natif, mais avec une syntaxe adaptée à JSX.
+
+## Écouter les Événements en JSX
+
+Vous attachez des "écouteurs d'événements" directement comme des props sur vos éléments JSX. Les noms sont en `camelCase` (comme `onClick`, `onChange`, `onSubmit`, `onMouseEnter`, etc.) et vous leur passez une **fonction** à exécuter lorsque l'événement se produit.
+
+<CodeBlock language="jsx" title="Exemple avec onClick">
+'use client'; // Nécessaire pour les gestionnaires d'événements
+
+import { Button } from '@/components/ui/button';
+
+function BoutonAlerte() {
+  // 1. Définir la fonction à exécuter
+  const handleClick = () => {
+    alert("Vous avez cliqué !");
+  };
+
+  return (
+    // 2. Passer la fonction à l'attribut onClick
+    <Button onClick={handleClick}>
+      Cliquez-moi
+    </Button>
+  );
+}
+
+// On peut aussi définir la fonction directement "en ligne" (inline)
+function AutreBouton() {
+  return (
+    <Button onClick={() => console.log("Clic en ligne !")}>
+      Log Clic
+    </Button>
+  );
+}
+
+export default BoutonAlerte; // Ou un composant parent qui utilise ces boutons
+</CodeBlock>
+
+<InfoTip type="warning" title="Fonction, pas Appel !">
+Faites attention à passer la **référence** de la fonction (`handleClick`) et non le **résultat** de son appel (`handleClick()`). Si vous mettez les parenthèses, la fonction s'exécutera *immédiatement* lors du rendu, pas seulement au clic ! L'exception est si vous utilisez une fonction fléchée inline `onClick={() => maFonction(arg)}`, ce qui est correct.
+</InfoTip>
+
+## L'Objet Événement (`e`)
+
+Souvent, la fonction de gestion d'événements reçoit automatiquement un **objet événement** (conventionnellement nommé `e` ou `event`) comme premier argument. Cet objet contient des informations sur l'événement qui s'est produit.
+
+*   **`e.preventDefault()` :** Très utile pour les formulaires (`onSubmit`) ou les liens (`onClick` sur `<a>`) pour **empêcher le comportement par défaut** du navigateur (comme recharger la page lors de la soumission d'un formulaire).
+*   **`e.target` :** Fait référence à l'élément DOM sur lequel l'événement s'est produit.
+*   **`e.target.value` :** Pour les éléments de formulaire comme `<input>`, `<textarea>`, `<select>`, cela donne la **valeur actuelle** de l'élément.

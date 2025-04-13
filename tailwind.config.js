@@ -1,12 +1,11 @@
-import tailwindcssAnimate from "tailwindcss-animate";
-
 /** @type {import('tailwindcss').Config} */
-const config = {
+module.exports = {
   darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/content/**/*.{md,mdx}", // Ajout pour supporter les fichiers MDX
   ],
   theme: {
     container: {
@@ -17,25 +16,6 @@ const config = {
       },
     },
     extend: {
-      keyframes: {
-        wiggle: {
-          "0%, 100%": { transform: "rotate(-3deg)" },
-          "50%": { transform: "rotate(3deg)" },
-        },
-        "accordion-down": {
-          from: { height: 0 },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
-        },
-      },
-      animation: {
-        wiggle: "wiggle 200ms ease-in-out",
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -76,9 +56,26 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            "code::before": {
+              content: '""',
+            },
+            "code::after": {
+              content: '""',
+            },
+            code: {
+              fontWeight: "400",
+              backgroundColor: "var(--tw-prose-pre-bg)",
+              padding: "0.25rem 0.375rem",
+              borderRadius: "0.25rem",
+              fontSize: "0.875em",
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [tailwindcssAnimate, require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography")],
 };
-
-export default config;

@@ -1,0 +1,24 @@
+---
+title: "Layouts Partagés"
+description: "Créer et utiliser des layouts partagés entre plusieurs pages"
+---
+
+# Layouts Partagés
+
+Les layouts permettent de partager des éléments d'interface entre plusieurs pages, comme les headers, footers, sidebars, etc.
+
+## Création d'un layout
+
+Dans Next.js avec App Router, vous définissez un layout en créant un fichier `layout.tsx` dans un dossier:
+
+```tsx
+export default function Layout({ children }) {
+  return (
+    <div>
+      <header>Mon en-tête partagé</header>
+      <main>{children}</main>
+      <footer>Mon pied de page partagé</footer>
+    </div>
+  );
+}
+```

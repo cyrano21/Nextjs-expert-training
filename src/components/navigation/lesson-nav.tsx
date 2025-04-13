@@ -1,52 +1,60 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/utils/cn";
-import { Lesson } from "@/types/curriculum";
+import { ArrowLeft, ArrowRight, CheckCircle, Circle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface LessonNavProps {
-  moduleId: string;
-  lessons: Lesson[];
-  currentLessonId?: string;
+  prevLessonUrl: string | null;
+  nextLessonUrl: string | null;
+  lessonId: string; // Conservé dans l'interface pour maintenir la compatibilité avec le code appelant
+  isCompleted: boolean;
 }
 
-export function LessonNav({ moduleId, lessons, currentLessonId }: LessonNavProps) {
-  const pathname = usePathname();
-
+export function LessonNav({
+  prevLessonUrl,
+  nextLessonUrl,
+  isCompleted,
+}: LessonNavProps) {
   return (
-    <div className="space-y-1">
-      <div className="px-3 py-2">
-        <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-          Leçons
-        </h2>
-        <div className="space-y-1">
-          {lessons.map((lesson, index) => {
-            const href = `/student/learn/${moduleId}/${lesson.id}`;
-            const isActive = pathname === href || currentLessonId === lesson.id;
-            
-            return (
-              <Link
-                key={lesson.id}
-                href={href}
-                className={cn(
-                  "flex items-center rounded-md px-4 py-2 text-sm font-medium transition-colors",
-                  "hover:bg-accent hover:text-accent-foreground",
-                  isActive
-                    ? "bg-accent text-accent-foreground"
-                    : "transparent"
-                )}
-              >
-                <div className="flex items-center space-x-3 w-full">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs">
-                    {index + 1}
-                  </div>
-                  <span className="truncate">{lesson.title}</span>
-                </div>
-              </Link>
-            );
-          })}
+    <div className="bg-card rounded-lg border p-4">
+      <h2 className="text-lg font-semibold mb-4">Navigation</h2>
+
+      <div className="flex flex-col space-y-3">
+        {prevLessonUrl && (
+          <Button variant="outline" size="sm" asChild className="justify-start">
+            <Link href={prevLessonUrl}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Leçon précédente
+            </Link>
+          </Button>
+        )}
+
+        <div className="flex items-center justify-center py-2">
+          {isCompleted ? (
+            <span className="text-sm flex items-center text-green-600 dark:text-green-400">
+              <CheckCircle className="h-5 w-5 mr-1" /> Leçon complétée
+            </span>
+          ) : (
+            <span className="text-sm flex items-center text-primary">
+              <Circle className="h-5 w-5 mr-1" /> Leçon en cours
+            </span>
+          )}
         </div>
+
+        {nextLessonUrl && (
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="justify-between"
+          >
+            <Link href={nextLessonUrl}>
+              Leçon suivante
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        )}
       </div>
     </div>
   );

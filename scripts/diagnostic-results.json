@@ -1,0 +1,92 @@
+{
+  "configs": [
+    {
+      "path": "next.config.js",
+      "exists": true,
+      "size": 368,
+      "content": "/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  reactStrictMode: true,\n\n  // Configuration pour les images externes\n  images: {\n    domains: [\"images.unsplash.com\", \"avatars.githubuser..."
+    },
+    {
+      "path": "next.config.mjs",
+      "exists": false
+    },
+    {
+      "path": "postcss.config.js",
+      "exists": true,
+      "size": 83,
+      "content": "module.exports = {\n  plugins: {\n    tailwindcss: {},\n    autoprefixer: {},\n  },\n};\n"
+    },
+    {
+      "path": "postcss.config.cjs",
+      "exists": false
+    },
+    {
+      "path": "tailwind.config.js",
+      "exists": true,
+      "size": 308,
+      "content": "/** @type {import('tailwindcss').Config} */\nmodule.exports = {\n  content: [\n    \"./src/pages/**/*.{js,ts,jsx,tsx,mdx}\",\n    \"./src/components/**/*.{js,ts,jsx,tsx,mdx}\",\n    \"./src/app/**/*.{js,ts,jsx,..."
+    },
+    {
+      "path": "tailwind.config.ts",
+      "exists": false
+    },
+    {
+      "path": ".storybook/postcss.config.js",
+      "exists": false
+    }
+  ],
+  "cssFiles": [
+    {
+      "path": "src/app/globals.css",
+      "exists": true,
+      "size": 1430,
+      "analysis": {
+        "tailwindDirectives": 3,
+        "layerDirectives": 2,
+        "cssVariables": 4,
+        "cssImports": 0
+      },
+      "firstLines": "/* Tailwind Directives */\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n"
+    },
+    {
+      "path": "src/styles/globals.css",
+      "exists": false
+    }
+  ],
+  "permissions": [
+    {
+      "path": ".next",
+      "exists": true,
+      "readable": true,
+      "writable": true
+    },
+    {
+      "path": ".next/cache",
+      "exists": true,
+      "readable": true,
+      "writable": true
+    },
+    {
+      "path": "node_modules",
+      "exists": true,
+      "readable": true,
+      "writable": true
+    }
+  ],
+  "packageInfo": {
+    "nextVersion": "^15.2.5",
+    "tailwindVersion": "^3.3.0",
+    "postcssVersion": "^8.4.31",
+    "hasTypography": true,
+    "hasTailwindPostcss": false
+  },
+  "conflicts": [],
+  "layout": {
+    "exists": true,
+    "importsGlobalsCss": true,
+    "otherCssImports": [
+      "import './globals.css'",
+      "import \"./globals.css\""
+    ]
+  }
+}

@@ -88,21 +88,21 @@ export function DashboardContent({
             <BookOpen className="text-blue-500" />
             <div>
               <p className="font-semibold">Cours en cours</p>
-              <p className="text-muted-foreground">{dashboardData?.inProgressCourses || 0}</p>
+              <p className="text-muted-foreground">{dashboardData?.progress.currentStreak || 0}</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
             <Target className="text-green-500" />
             <div>
               <p className="font-semibold">Objectifs atteints</p>
-              <p className="text-muted-foreground">{dashboardData?.completedCourses || 0}</p>
+              <p className="text-muted-foreground">{dashboardData?.progress.overallCompletion || 0}</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
             <Trophy className="text-yellow-500" />
             <div>
               <p className="font-semibold">Points de compétence</p>
-              <p className="text-muted-foreground">{dashboardData?.skillPoints || 0}</p>
+              <p className="text-muted-foreground">{dashboardData?.progress.points || 0}</p>
             </div>
           </div>
         </div>
@@ -117,7 +117,11 @@ export function DashboardContent({
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {courses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+            <CourseCard 
+              key={course.id} 
+              course={course} 
+              progress={dashboardData?.progress.overallCompletion || 0} 
+            />
           ))}
         </div>
       </div>

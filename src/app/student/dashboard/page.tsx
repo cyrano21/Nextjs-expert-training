@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { getAllCourses } from "@/lib/courses/course-service";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Tableau de bord | Expert Academy",
@@ -28,7 +29,15 @@ export const metadata = {
 
 export default async function StudentDashboard() {
   // S'assurer que l'utilisateur est authentifié comme étudiant
-  const { user } = await getAuthSession("student");
+  const session = await getAuthSession("student");
+  
+  // Rediriger si l'utilisateur n'est pas authentifié
+  if (!session?.user) {
+    redirect('/auth/login?callbackUrl=/student/dashboard');
+  }
+  
+  // Utiliser user après vérification que session n'est pas null
+  const { user } = session;
 
   // Récupérer les cours pour l'étudiant
   const allCourses = await getAllCourses();

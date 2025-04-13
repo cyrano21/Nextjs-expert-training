@@ -1,0 +1,172 @@
+---
+title: Exercice Interactif - Votre Premier HTML
+description: Apprenez à créer une page web simple avec HTML et voyez le résultat en temps réel
+tags: 
+  - html
+  - interactive
+  - practice
+estimatedTimeMinutes: 25
+objectives:
+  - Comprendre la structure de base HTML
+  - Expérimenter avec les balises HTML courantes
+  - Visualiser le résultat en temps réel
+---
+
+# Exercice Interactif : Créez votre première page web
+
+Dans cet exercice, vous allez pouvoir expérimenter avec HTML et voir les résultats en temps réel, directement dans votre navigateur.
+
+## Structure de base HTML
+
+Toute page HTML est composée d'une structure de base qui inclut les éléments `<!DOCTYPE html>`, `<html>`, `<head>`, et `<body>`.
+
+<InfoTip type="info" title="Structure HTML">
+La structure HTML définit l'organisation de votre page web, avec des sections distinctes pour les métadonnées (head) et le contenu visible (body).
+</InfoTip>
+
+## Essayez-le vous-même !
+
+Modifiez le code ci-dessous pour créer votre première page web. Vous verrez le résultat s'afficher immédiatement à droite !
+
+<CodeCanvas
+  title="Votre premier code HTML"
+  description="Modifiez ce code et regardez le résultat s'afficher en temps réel"
+  language="html"
+  initialCode="<h1>Bienvenue sur ma page</h1>
+<p>Ceci est mon premier code HTML interactif.</p>
+
+<!-- Essayez d'ajouter une liste ici ! -->"
+/>
+
+## En savoir plus : Balises HTML courantes
+
+Vous pouvez utiliser de nombreuses balises HTML pour structurer votre contenu :
+
+- `<h1>` à `<h6>` : Titres de différents niveaux
+- `<p>` : Paragraphes
+- `<ul>` et `<li>` : Listes à puces
+- `<ol>` et `<li>` : Listes numérotées
+- `<a href="...">` : Liens
+- `<img src="...">` : Images
+
+## Défi : Créez une page plus complexe
+
+Essayez maintenant de créer une page plus élaborée avec différentes balises HTML :
+
+<CodeCanvas
+  title="Défi HTML"
+  description="Créez une page complète avec titres, paragraphes, listes et liens"
+  language="html"
+  height="400px"
+  initialCode="<!DOCTYPE html>
+<html>
+<head>
+  <title>Ma page web</title>
+</head>
+<body>
+  <h1>Mon site personnel</h1>
+  
+  <!-- Ajoutez ici une description vous concernant -->
+  
+  <h2>Mes centres d'intérêt</h2>
+  <!-- Créez une liste de vos centres d'intérêt -->
+  
+  <h2>Liens utiles</h2>
+  <!-- Ajoutez quelques liens vers des sites que vous aimez -->
+  
+</body>
+</html>"
+/>
+
+## Et maintenant, avec du style !
+
+Le HTML définit la structure, mais c'est le CSS qui donne du style. Essayez d'ajouter des couleurs et des styles à votre page :
+
+<CodeCanvas
+  title="HTML + CSS"
+  description="Ajoutez du style à votre page HTML"
+  language="html"
+  height="400px"
+  initialCode="<!DOCTYPE html>
+<html>
+<head>
+  <title>Page stylée</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      /* Ajoutez une couleur de fond ici */
+    }
+    
+    h1 {
+      color: #333;
+      /* Personnalisez votre titre */
+    }
+    
+    /* Ajoutez vos propres règles CSS */
+    
+  </style>
+</head>
+<body>
+  <h1>Ma page stylée</h1>
+  <p>Ce texte peut être mis en forme avec CSS.</p>
+  
+  <div class="special-section">
+    <h2>Section spéciale</h2>
+    <p>Cette section pourrait avoir un style différent.</p>
+  </div>
+</body>
+</html>"
+/>
+
+## Javascript en action !
+
+Enfin, ajoutons de l'interactivité avec JavaScript :
+
+<CodeCanvas
+  title="HTML + JavaScript"
+  description="Créez une page interactive avec JavaScript"
+  language="javascript"
+  height="350px"
+  initialCode="// Cet exemple affiche un message dans la console
+console.log('Bonjour depuis JavaScript!');
+
+// Compteur simple
+let compteur = 0;
+
+function incrementer() {
+  compteur++;
+  console.log('Compteur: ' + compteur);
+}
+
+// Appel de la fonction
+incrementer();
+incrementer();
+
+// Défi : créez votre propre fonction
+// qui affiche un message personnalisé"
+/>
+
+## Quiz de validation
+
+1. Quelle balise est utilisée pour créer un lien en HTML ?
+   - [ ] `<link>`
+   - [x] `<a>`
+   - [ ] `<href>`
+
+2. Comment appelle-t-on le langage qui permet de styler une page web ?
+   - [ ] HTML
+   - [x] CSS
+   - [ ] JSON
+
+3. Lequel de ces langages permet d'ajouter de l'interactivité à une page web ?
+   - [ ] HTTP
+   - [ ] SQL
+   - [x] JavaScript
+
+## Ressources Supplémentaires
+
+- [MDN Web Docs - HTML](https://developer.mozilla.org/fr/docs/Web/HTML)
+- [W3Schools HTML Tutorial](https://www.w3schools.com/html/)
+
+**Félicitations !** 🎉 Vous avez créé votre première page web interactive et compris les bases du HTML, CSS et JavaScript !

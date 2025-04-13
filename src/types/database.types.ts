@@ -283,6 +283,8 @@ export type CompositeTypes<
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
 
+export type Role = 'student' | 'instructor' | 'admin';
+
 export const Constants = {
   public: {
     Enums: {

@@ -1,0 +1,32 @@
+{
+  "title": "Styliser avec Tailwind CSS",
+  "description": "Maîtriser Tailwind CSS pour créer des interfaces utilisateur modernes et responsives",
+  "order": 4,
+  "lessons": [
+    {
+      "slug": "01-tailwind-pourquoi-comment",
+      "title": "Tailwind CSS: Pourquoi et Comment",
+      "description": "Introduction à Tailwind CSS et ses avantages"
+    },
+    {
+      "slug": "02-les-utilitaires-essentiels",
+      "title": "Les Utilitaires Essentiels",
+      "description": "Découvrir les classes utilitaires les plus courantes de Tailwind CSS"
+    },
+    {
+      "slug": "03-hover-focus-et-autres-etats",
+      "title": "Hover, Focus et Autres États",
+      "description": "Rendre vos interfaces interactives avec les modificateurs d'état"
+    },
+    {
+      "slug": "04-responsive-design-facile",
+      "title": "Responsive Design Facile",
+      "description": "Adapter facilement vos interfaces à différentes tailles d'écran"
+    },
+    {
+      "slug": "05-dark-mode-simple",
+      "title": "Mode Sombre Simplifié",
+      "description": "Implémenter un mode sombre avec Tailwind CSS"
+    }
+  ]
+}

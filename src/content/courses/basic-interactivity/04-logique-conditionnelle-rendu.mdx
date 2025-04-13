@@ -1,0 +1,51 @@
+---
+title: "Logique Conditionnelle dans le Rendu"
+description: "Afficher différents contenus selon des conditions"
+---
+
+# Logique Conditionnelle dans le Rendu
+
+En React, vous pouvez facilement afficher différents contenus en fonction de conditions.
+
+## Opérateur Ternaire
+
+```jsx
+function Salutation({ estConnecte }) {
+  return (
+    <div>
+      {estConnecte 
+        ? <h1>Bienvenue, utilisateur !</h1>
+        : <h1>Veuillez vous connecter</h1>
+      }
+    </div>
+  );
+}
+```
+
+## Opérateur ET (&&)
+
+```jsx
+function Notification({ messages }) {
+  return (
+    <div>
+      {messages.length > 0 && (
+        <p>Vous avez {messages.length} nouveaux messages</p>
+      )}
+    </div>
+  );
+}
+```
+
+## Rendu de Listes
+
+```jsx
+function ListeUtilisateurs({ utilisateurs }) {
+  return (
+    <ul>
+      {utilisateurs.map(utilisateur => (
+        <li key={utilisateur.id}>{utilisateur.nom}</li>
+      ))}
+    </ul>
+  );
+}
+```

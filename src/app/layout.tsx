@@ -1,10 +1,8 @@
-/* stylelint-disable */
+import "./globals.css";
 import React from "react";
 import type { Metadata, Viewport } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./providers"; // Import the Providers component
-import { cn } from "@/lib/utils"; // Ensure correct path
+import { Providers } from "./providers";
 
 // Définir vos polices
 const inter = Inter({
@@ -116,4 +114,3 @@ export default function RootLayout({
     </html>
   );
 }
-/* stylelint-enable */

@@ -1,0 +1,90 @@
+---
+title: "Le Trio Fondateur : HTML, CSS & JavaScript"
+description: "Un rappel rapide sur les rôles essentiels de HTML, CSS et JavaScript, et comment React/Next.js s'appuient sur eux."
+tags: ['html', 'css', 'javascript', 'web basics', 'beginner']
+estimatedTimeMinutes: 10
+objectives:
+  - Différencier les rôles de HTML, CSS et JavaScript.
+  - Comprendre que React/Next.js génèrent et manipulent ces technologies web fondamentales.
+  - (Activité) Associer des exemples de code à la bonne technologie.
+---
+
+import { InfoTip, CodeBlock, Quiz, InteractiveCodeMatcher } from '@/components/mdx';
+
+# Les 3 Piliers du Web : HTML, CSS, JS 🏛️
+
+Avant de plonger plus profondément dans Next.js et React, faisons un **micro-rappel** sur les technologies qui constituent la base de *presque toutes* les pages web que vous visitez. Comprendre leur rôle vous aidera à mieux saisir ce que fait Next.js "sous le capot".
+
+Imaginez construire une maison :
+
+1.  **HTML (HyperText Markup Language) : La Structure 뼈**
+    *   C'est le **squelette** de votre page web. Il définit la **structure** et le **contenu** sémantique.
+    *   Utilise des **balises** (tags) comme `<p>` (paragraphe), `<h1>` (titre principal), `<img>` (image), `<div>` (conteneur générique), `<button>` (bouton).
+    *   **Exemple :**
+        <CodeBlock language="html">
+        <h1>Mon Super Titre</h1>
+        <p>Ceci est un paragraphe de texte.</p>
+        <button>Cliquez ici</button>
+        </CodeBlock>
+
+2.  **CSS (Cascading Style Sheets) : L'Apparence 🎨**
+    *   C'est le **décorateur** de votre maison. Il contrôle l'**apparence visuelle** : couleurs, polices, tailles, espacements, positionnement, animations...
+    *   Utilise des **sélecteurs** pour cibler les éléments HTML et leur appliquer des **règles** (propriétés + valeurs).
+    *   **Exemple (ciblant le HTML ci-dessus) :**
+        <CodeBlock language="css">
+        h1 {
+          color: dodgerblue; /* Met le titre en bleu */
+          font-size: 2rem; /* Augmente la taille */
+        }
+        button {
+          background-color: lightcoral;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px; /* Arrondit les coins */
+        }
+        </CodeBlock>
+
+3.  **JavaScript (JS) : L'Interactivité ⚡**
+    *   C'est l'**électricien** et le **mécanicien** de la maison. Il ajoute le **comportement dynamique** et l'**interactivité**.
+    *   Permet de réagir aux actions de l'utilisateur (clics, saisie), de modifier le HTML et le CSS après le chargement de la page, de communiquer avec des serveurs (API), etc.
+    *   **Exemple (faisant réagir le bouton) :**
+        <CodeBlock language="javascript">
+        // Trouve le bouton dans le HTML
+        const myButton = document.querySelector('button');
+
+        // Ajoute un "écouteur" pour l'événement 'click'
+        myButton.addEventListener('click', () => {
+          // Action à réaliser quand on clique
+          alert('Bouton cliqué !');
+        });
+        </CodeBlock>
+
+<InfoTip type="idea" title="Et Next.js/React dans tout ça ?">
+React (et donc Next.js) est principalement écrit en **JavaScript**. Vous utilisez JSX (qui ressemble à HTML) pour décrire votre structure, et souvent Tailwind (qui est une façon d'écrire du CSS) pour le style. Au final, Next.js **génère le HTML, le CSS et le JavaScript** optimisés que le navigateur comprend ! Vous travaillez à un niveau d'abstraction plus élevé.
+</InfoTip>
+
+## Activité : À Chaque Code Sa Tâche ! 🧩
+
+Identifiez à quelle technologie (HTML, CSS, ou JavaScript) correspond chaque extrait de code ci-dessous.
+
+<InteractiveCodeMatcher
+  pairs={[
+    { id: 'html1', code: '<div><img src="logo.png" alt="Logo"></div>', language: 'html' },
+    { id: 'css1', code: '.title { text-decoration: underline; }', language: 'css' },
+    { id: 'js1', code: "element.style.display = 'none';", language: 'javascript' },
+    { id: 'html2', code: '<ul><li>Item 1</li></ul>', language: 'html' },
+    { id: 'css2', code: 'body { margin: 0; font-family: sans-serif; }', language: 'css' },
+    { id: 'js2', code: "if (userLoggedIn) { showProfile(); }", language: 'javascript' },
+  ]}
+  options={[
+    { id: 'html', label: 'HTML (Structure)'},
+    { id: 'css', label: 'CSS (Style)'},
+    { id: 'js', label: 'JavaScript (Interactivité)'},
+  ]}
+  correctMapping={{ // Associe l'ID du code à l'ID de l'option
+    'html1': 'html', 'css1': 'css', 'js1': 'js',
+    'html2': 'html', 'css2': 'css', 'js2': 'js',
+  }}
+/>
+
+Ce bref rappel vous arme pour mieux comprendre les outils que nous allons utiliser. Prêt à voir comment Next.js gère le développement local ? C'est la prochaine leçon !

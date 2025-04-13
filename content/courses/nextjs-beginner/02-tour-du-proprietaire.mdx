@@ -1,0 +1,112 @@
+---
+title: "Tour du Propriétaire : Structure d'un Projet Next.js"
+description: "Explorons ensemble les dossiers et fichiers clés d'un projet Next.js pour comprendre où tout se trouve."
+tags: ['nextjs', 'structure', 'app router', 'configuration', 'beginner']
+estimatedTimeMinutes: 20
+objectives:
+  - Identifier les dossiers `app`, `public`, et `components`.
+  - Comprendre le rôle de `layout.tsx` et `page.tsx` dans l'App Router.
+  - Reconnaître `package.json` et `next.config.js`.
+  - (Activité) Associer des descriptions aux bons fichiers/dossiers.
+---
+
+import { InfoTip, CodeBlock, Quiz, FileTree, DraggableMatch } from '@/components/mdx';
+
+# Bienvenue dans les Coulisses ! 🕵️‍♀️
+
+Maintenant que votre application `my-nexus-app` est créée, ouvrons le capot et regardons ce qu'il y a à l'intérieur. Ne vous inquiétez pas si tout ne semble pas clair immédiatement, nous y reviendrons !
+
+Ouvrez le dossier `my-nexus-app` dans votre éditeur de code préféré (comme VS Code). Vous devriez voir une structure similaire à ceci :
+
+<FileTree>
+  my-nexus-app/
+  ├── .next/           # Dossier de build (géré par Next.js) - Ne pas toucher !
+  ├── node_modules/    # Dépendances du projet (géré par npm/yarn) - Ne pas toucher !
+  ├── public/          # Fichiers statiques (images, polices...)
+  │   ├── next.svg
+  │   └── vercel.svg
+  ├── src/             # ✨ C'est ici que vit VOTRE code ! ✨
+  │   ├── app/         # ❤️ Cœur de l'application (Routing, Pages, Layouts)
+  │   │   ├── favicon.ico
+  │   │   ├── globals.css # Styles globaux (attention !)
+  │   │   ├── layout.tsx  # Mise en page racine (TRÈS important)
+  │   │   └── page.tsx    # UI de la page d'accueil ('/')
+  │   ├── components/    # (Optionnel, bonne pratique) Pour vos composants réutilisables
+  │   ├── lib/           # (Optionnel, bonne pratique) Pour les utilitaires, etc.
+  │   └── ...            # D'autres dossiers que vous créerez !
+  ├── .eslintrc.json   # Configuration ESLint (qualité du code)
+  ├── .gitignore       # Fichiers/dossiers ignorés par Git
+  ├── next.config.mjs  # Configuration de Next.js
+  ├── package.json     # Infos projet, dépendances, scripts (comme 'npm run dev')
+  ├── postcss.config.js # Configuration PostCSS (pour Tailwind)
+  ├── tailwind.config.ts # Configuration Tailwind CSS
+  └── tsconfig.json    # Configuration TypeScript
+</FileTree>
+
+<InfoTip type="info">
+Les dossiers `.next` et `node_modules` sont gérés automatiquement. Concentrez-vous principalement sur les dossiers `public` et `src`.
+</InfoTip>
+
+## Les Zones Clés à Connaître :
+
+1.  **`src/app/` : Le Cerveau du Routage et des Pages** ❤️
+    *   C'est le **cœur** de votre application avec l'**App Router**.
+    *   Chaque **dossier** ici représente un segment d'URL (une partie de l'adresse web).
+    *   **`page.tsx`** : Définit l'interface utilisateur (le contenu) **unique** d'une route spécifique. La page d'accueil (`/`) est définie par `src/app/page.tsx`. Si vous créez `src/app/about/page.tsx`, cela créera la page `votresite.com/about`.
+    *   **`layout.tsx`** : Définit une **mise en page partagée** pour une route et ses enfants. `src/app/layout.tsx` est la mise en page racine appliquée à *toutes* les pages. Utile pour le Header, Footer, Sidebar.
+    *   **`globals.css`** : Fichier pour les styles CSS appliqués **globalement**. À utiliser avec parcimonie, préférez Tailwind ou les modules CSS.
+
+2.  **`public/` : Les Ressources Accessibles** 🖼️
+    *   Tout ce qui se trouve ici est servi **directement** à la racine de votre site.
+    *   Idéal pour les images (`/mon-image.png`), les polices, les fichiers `robots.txt`, `sitemap.xml`, etc.
+    *   Exemple : Si vous mettez `logo.svg` dans `public`, vous pouvez l'afficher avec `<img src="/logo.svg" />`.
+
+3.  **`src/components/` (Bonne Pratique)** 🧱
+    *   Ce dossier n'est pas créé par défaut mais c'est une **convention très répandue**.
+    *   Rangez ici vos **composants React réutilisables** (Boutons, Cartes, Modales...) pour garder votre code `app/` propre.
+
+4.  **`package.json` : La Carte d'Identité** 🆔
+    *   Contient des informations sur votre projet (nom, version).
+    *   Liste les **dépendances** (les bibliothèques externes que votre projet utilise, comme React, Next.js, Tailwind).
+    *   Définit les **scripts** que vous pouvez lancer (comme `npm run dev`, `npm run build`).
+
+5.  **`next.config.mjs` : Les Réglages Fins** ⚙️
+    *   Fichier pour **configurer le comportement** de Next.js (optimisation d'images, redirections, variables d'environnement, etc.). On le touchera plus tard.
+
+## Activité : Qui fait Quoi ? 🤔
+
+Associez ces fichiers/dossiers à leur rôle principal. Faites glisser les descriptions vers les éléments correspondants !
+
+<DraggableMatch
+  items={[
+    { id: 'app', label: 'src/app/' },
+    { id: 'layout', label: 'src/app/layout.tsx' },
+    { id: 'page', label: 'src/app/page.tsx' },
+    { id: 'public', label: 'public/' },
+    { id: 'pkgjson', label: 'package.json' },
+  ]}
+  targets={[
+    { id: 'role1', label: 'Définit l\'UI unique de la page d\'accueil' },
+    { id: 'role2', label: 'Contient les dépendances et les scripts du projet' },
+    { id: 'role3', label: 'Coeur du routing et des pages' },
+    { id: 'role4', label: 'Mise en page racine partagée par toutes les pages' },
+    { id: 'role5', label: 'Stocke les images et fichiers statiques accessibles publiquement' },
+  ]}
+  correctMatches={{ // Définir les bonnes correspondances
+    'app': 'role3',
+    'layout': 'role4',
+    'page': 'role1',
+    'public': 'role5',
+    'pkgjson': 'role2',
+  }}
+  feedback={{
+    correct: "Excellent ! Vous avez bien compris la structure.",
+    incorrect: "Pas tout à fait. Réessayez ou revoyez les descriptions ci-dessus !"
+  }}
+/>
+
+<InfoTip type="info">
+Ne vous inquiétez pas de tout retenir par cœur maintenant. L'important est d'avoir une idée générale de l'organisation. Vous vous y habituerez très vite en pratiquant !
+</InfoTip>
+
+Prochaine étape : un petit rappel sur les fondations du web (HTML, CSS, JS) pour voir comment Next.js s'y intègre. Allons-y !

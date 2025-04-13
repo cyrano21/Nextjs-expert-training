@@ -15,6 +15,7 @@ import { getAllCourses } from "@/lib/courses/course-service";
 import { getAuthSession } from "@/lib/auth/authUtils";
 import { cn } from "@/lib/utils";
 import styles from "./learn-page.module.css";
+import { redirect } from "next/navigation";
 
 // Type pour la progression utilisateur
 interface UserProgressData {
@@ -27,23 +28,46 @@ export const metadata = {
 };
 
 // Composant pour la barre de progression
-const ProgressBar = ({ value }: { value: number }) => (
-  <div className={cn("h-2 w-full bg-muted rounded-full overflow-hidden")}>
-    <div
-      className="h-full bg-primary transition-all duration-300"
-      style={{ width: `${value}%` }}
-    />
-  </div>
-);
+const ProgressBar = ({ value }: { value: number }) => {
+  // Arrondir la valeur au multiple de 5 le plus proche
+  const roundedValue = Math.round(value / 5) * 5;
+  // Assurer que la valeur est entre 0 et 100
+  const safeValue = Math.max(0, Math.min(100, roundedValue));
+
+  return (
+    <div className={cn("h-2 w-full bg-muted rounded-full overflow-hidden")}>
+      <div
+        className={cn(styles.progressBar, styles[`progress-${safeValue}`])}
+      />
+    </div>
+  );
+};
 
 // Composant pour l'indicateur de progression en haut de carte
-const CourseProgressIndicator = ({ value }: { value: number }) => (
-  <div className={cn("h-2 bg-primary")} style={{ width: `${value}%` }} />
-);
+const CourseProgressIndicator = ({ value }: { value: number }) => {
+  // Arrondir la valeur au multiple de 5 le plus proche
+  const roundedValue = Math.round(value / 5) * 5;
+  // Assurer que la valeur est entre 0 et 100
+  const safeValue = Math.max(0, Math.min(100, roundedValue));
+
+  return (
+    <div
+      className={cn(styles.progressIndicator, styles[`progress-${safeValue}`])}
+    />
+  );
+};
 
 export default async function LearnPage() {
   // Authentifier l'utilisateur avec la nouvelle méthode sécurisée
-  const { user } = await getAuthSession("student");
+  const session = await getAuthSession("student");
+
+  // Rediriger si l'utilisateur n'est pas authentifié
+  if (!session?.user) {
+    redirect("/auth/login?callbackUrl=/student/learn");
+  }
+
+  // Utiliser user après vérification que session n'est pas null
+  const { user } = session;
 
   // Récupérer tous les cours disponibles
   const courses = await getAllCourses();
@@ -193,7 +217,7 @@ export default async function LearnPage() {
                       <ul className="text-sm space-y-1">
                         {course.objectives
                           .slice(0, 2)
-                          .map((objective, index) => (
+                          .map((objective: string, index: number) => (
                             <li key={index} className="text-muted-foreground">
                               {objective}
                             </li>

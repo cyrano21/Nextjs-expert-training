@@ -1,15 +1,28 @@
-'use client';
+"use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Session, User, AuthError, AuthResponse, UserMetadata } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase-client';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import {
+  Session,
+  User,
+  AuthError,
+  AuthResponse,
+  UserMetadata,
+} from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase-client";
 
 interface AuthContextType {
   session: Session | null;
   user: User | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>;
-  signUp: (email: string, password: string, metadata?: UserMetadata) => Promise<{ error: AuthError | null; data: AuthResponse['data'] | null }>;
+  signIn: (
+    email: string,
+    password: string
+  ) => Promise<{ error: AuthError | null }>;
+  signUp: (
+    email: string,
+    password: string,
+    metadata?: UserMetadata
+  ) => Promise<{ error: AuthError | null; data: AuthResponse["data"] | null }>;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: AuthError | null }>;
@@ -23,15 +36,42 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    // Au premier chargement, vérifier s'il existe une session active
+    const initializeAuth = async () => {
+      try {
+        // Récupérer la session existante
+        const {
+          data: { session: currentSession },
+          error,
+        } = await supabase.auth.getSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+        if (error) {
+          console.error("Erreur lors de la récupération de la session:", error);
+          setLoading(false);
+          return;
+        }
+
+        if (currentSession) {
+          setSession(currentSession);
+          setUser(currentSession.user);
+        }
+      } catch (err) {
+        console.error("Erreur d'initialisation de l'auth:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
+
+    // Configurer l'écouteur de changement d'état d'authentification
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, currentSession) => {
+      console.log("Événement auth:", event);
+
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
       setLoading(false);
     });
 
@@ -41,11 +81,18 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     return { error };
   };
 
-  const signUp = async (email: string, password: string, metadata?: UserMetadata) => {
+  const signUp = async (
+    email: string,
+    password: string,
+    metadata?: UserMetadata
+  ) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -67,14 +114,14 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
     if (error) {
-      console.error('Erreur lors de la connexion avec Google:', error);
+      console.error("Erreur lors de la connexion avec Google:", error);
     }
   };
 
@@ -96,7 +143,6 @@ export default AuthProvider;
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 }
-

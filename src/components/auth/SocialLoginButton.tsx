@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/auth-context';
+import { setupOAuthFlow } from '@/lib/auth/oauth-handler-client';
 
 type SocialProvider = 'google' | 'github';
 
@@ -22,6 +23,10 @@ export function SocialLoginButton({
     if (onClick) {
       await onClick();
     } else if (provider === 'google') {
+      // Configurer le flux OAuth PKCE de manière asynchrone
+      await setupOAuthFlow();
+      
+      // Rediriger vers l'authentification Supabase
       await signInWithGoogle();
     }
     // Ajouter d'autres fournisseurs ici si nécessaire

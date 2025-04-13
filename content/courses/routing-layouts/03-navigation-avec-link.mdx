@@ -1,0 +1,26 @@
+---
+title: "Navigation avec le composant Link"
+description: "Utiliser le composant Link pour une navigation côté client"
+---
+
+# Navigation avec le composant Link
+
+Next.js fournit un composant `Link` pour la navigation côté client, sans rechargement complet de la page.
+
+## Utilisation de base
+
+```tsx
+import Link from 'next/link';
+
+export default function Navigation() {
+  return (
+    <nav>
+      <Link href="/">Accueil</Link>
+      <Link href="/apropos">À propos</Link>
+      <Link href="/contact">Contact</Link>
+    </nav>
+  );
+}
+```
+
+Le composant Link précharge automatiquement les pages liées dans la fenêtre d'affichage, ce qui rend la navigation encore plus rapide.

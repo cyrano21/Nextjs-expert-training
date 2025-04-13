@@ -1,0 +1,27 @@
+{
+  "title": "Routing & Layouts dans Next.js",
+  "description": "Maîtriser le système de routage et les layouts dans Next.js",
+  "order": 3,
+  "lessons": [
+    {
+      "slug": "01-app-router-la-base",
+      "title": "App Router: La Base",
+      "description": "Comprendre le fonctionnement du routeur App de Next.js"
+    },
+    {
+      "slug": "02-layouts-partages",
+      "title": "Layouts Partagés",
+      "description": "Créer et utiliser des layouts partagés entre plusieurs pages"
+    },
+    {
+      "slug": "03-navigation-avec-link",
+      "title": "Navigation avec le composant Link",
+      "description": "Utiliser le composant Link pour une navigation côté client"
+    },
+    {
+      "slug": "04-routes-dynamiques-intro",
+      "title": "Introduction aux Routes Dynamiques",
+      "description": "Créer des routes dynamiques avec des paramètres variables"
+    }
+  ]
+}

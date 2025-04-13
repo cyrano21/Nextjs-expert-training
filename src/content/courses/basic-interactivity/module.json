@@ -1,0 +1,34 @@
+{
+  "title": "Interactivité de Base avec React",
+  "description": "Apprendre à créer des composants interactifs avec React",
+  "order": 5,
+  "lessons": [
+    {
+      "slug": "01-composants-client-necessite",
+      "title": "Composants Client: une Nécessité",
+      "description": "Comprendre quand et pourquoi utiliser les composants client dans Next.js"
+    },
+    {
+      "slug": "02-usestate-le-gardien-de-letat",
+      "title": "useState: Le Gardien de l'État",
+      "description": "Utiliser le hook useState pour gérer l'état local d'un composant"
+    },
+    {
+      "slug": "03-gerer-les-evenements",
+      "title": "Gérer les Événements",
+      "description": "Répondre aux actions utilisateur via les gestionnaires d'événements"
+    },
+    {
+      "slug": "04-logique-conditionnelle-rendu",
+      "title": "Logique Conditionnelle dans le Rendu",
+      "description": "Afficher différents contenus selon des conditions"
+    }
+  ],
+  "prerequisites": ["react-foundations"],
+  "outcomes": [
+    "Créer des composants interactifs avec useState",
+    "Gérer les événements utilisateur comme les clics et les saisies",
+    "Implémenter des affichages conditionnels basés sur l'état"
+  ],
+  "nextSteps": ["personal-portfolio-project"]
+}

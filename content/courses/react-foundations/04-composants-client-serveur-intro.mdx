@@ -1,0 +1,33 @@
+---
+title: "Introduction aux Composants Client et Serveur"
+description: "Comprendre la différence entre les composants client et serveur dans Next.js"
+---
+
+# Introduction aux Composants Client et Serveur
+
+Dans Next.js 13+, les composants sont par défaut des composants serveur. Pour créer un composant client, vous devez explicitement l'indiquer.
+
+## Composants Serveur
+
+Les composants serveur sont rendus sur le serveur et envoyés au client sous forme de HTML. Ils sont idéaux pour le contenu statique ou qui ne nécessite pas d'interactivité.
+
+## Composants Client
+
+Les composants client sont rendus côté client et peuvent utiliser des hooks comme useState, useEffect, etc.
+
+```jsx
+'use client'; // Cette directive indique que c'est un composant client
+
+import { useState } from 'react';
+
+export default function Compteur() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div>
+      <p>Compteur: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Incrémenter</button>
+    </div>
+  );
+}
+```

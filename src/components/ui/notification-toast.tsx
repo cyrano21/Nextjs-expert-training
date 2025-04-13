@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Info, AlertTriangle, CheckCircle } from 'lucide-react';
-import { cn } from '@/utils/cn';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Info, AlertTriangle, CheckCircle } from "lucide-react";
+import { cn } from "@/utils/cn";
 
-export type NotificationType = 'info' | 'success' | 'warning' | 'error';
+export type NotificationType = "info" | "success" | "warning" | "error";
 
 interface NotificationProps {
   title: string;
@@ -19,7 +19,7 @@ interface NotificationProps {
 export function Notification({
   title,
   message,
-  type = 'info',
+  type = "info",
   duration = 5000,
   onClose,
   action,
@@ -38,7 +38,7 @@ export function Notification({
         setIsVisible(false);
         if (onClose) onClose();
       }, duration);
-      
+
       return () => clearTimeout(timer);
     }
   }, [duration, isVisible, onClose]);
@@ -51,30 +51,30 @@ export function Notification({
   // Définir l'icône et les couleurs en fonction du type
   const getTypeStyles = () => {
     switch (type) {
-      case 'success':
+      case "success":
         return {
           icon: <CheckCircle className="h-5 w-5" />,
-          bgColor: 'bg-green-500',
-          textColor: 'text-white',
+          bgColor: "bg-green-500",
+          textColor: "text-white",
         };
-      case 'warning':
+      case "warning":
         return {
           icon: <AlertTriangle className="h-5 w-5" />,
-          bgColor: 'bg-amber-500',
-          textColor: 'text-white',
+          bgColor: "bg-amber-500",
+          textColor: "text-white",
         };
-      case 'error':
+      case "error":
         return {
           icon: <AlertTriangle className="h-5 w-5" />,
-          bgColor: 'bg-red-500',
-          textColor: 'text-white',
+          bgColor: "bg-red-500",
+          textColor: "text-white",
         };
-      case 'info':
+      case "info":
       default:
         return {
           icon: <Info className="h-5 w-5" />,
-          bgColor: 'bg-primary',
-          textColor: 'text-primary-foreground',
+          bgColor: "bg-primary",
+          textColor: "text-primary-foreground",
         };
     }
   };
@@ -95,33 +95,41 @@ export function Notification({
           )}
         >
           <div className="flex">
-            <div className={cn("flex w-12 flex-shrink-0 items-center justify-center", bgColor)}>
+            <div
+              className={cn(
+                "flex w-12 flex-shrink-0 items-center justify-center",
+                bgColor
+              )}
+            >
               <span className={textColor}>{icon}</span>
             </div>
             <div className="flex-1 p-4">
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-medium">{title}</h3>
-                  <div className="mt-1 text-sm text-muted-foreground">{message}</div>
+                  <div className="mt-1 text-sm text-muted-foreground">
+                    {message}
+                  </div>
                   {action && <div className="mt-3">{action}</div>}
                 </div>
                 <button
                   onClick={handleClose}
                   className="ml-4 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md hover:bg-muted"
+                  aria-label="Fermer la notification"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
             </div>
           </div>
-          
+
           {/* Barre de progression pour la durée */}
           {duration !== Infinity && (
             <motion.div
               className={cn("h-1", bgColor)}
-              initial={{ width: '100%' }}
-              animate={{ width: '0%' }}
-              transition={{ duration: duration / 1000, ease: 'linear' }}
+              initial={{ width: "100%" }}
+              animate={{ width: "0%" }}
+              transition={{ duration: duration / 1000, ease: "linear" }}
             />
           )}
         </motion.div>
@@ -136,34 +144,44 @@ interface NotificationProviderProps {
 }
 
 interface NotificationContextType {
-  showNotification: (props: Omit<NotificationProps, 'open'>) => string;
+  showNotification: (props: Omit<NotificationProps, "open">) => string;
   closeNotification: (id: string) => void;
 }
 
-export const NotificationContext = React.createContext<NotificationContextType | undefined>(undefined);
+export const NotificationContext = React.createContext<
+  NotificationContextType | undefined
+>(undefined);
 
 export function NotificationProvider({ children }: NotificationProviderProps) {
-  const [notifications, setNotifications] = useState<Array<NotificationProps & { id: string }>>([]);
+  const [notifications, setNotifications] = useState<
+    Array<NotificationProps & { id: string }>
+  >([]);
 
-  const showNotification = (props: Omit<NotificationProps, 'open'>) => {
+  const showNotification = (props: Omit<NotificationProps, "open">) => {
     const id = Math.random().toString(36).substring(2, 9);
-    setNotifications(prev => [...prev, { ...props, id, open: true }]);
+    setNotifications((prev) => [...prev, { ...props, id, open: true }]);
     return id;
   };
 
   const closeNotification = (id: string) => {
-    setNotifications(prev => prev.map(notification => 
-      notification.id === id ? { ...notification, open: false } : notification
-    ));
-    
+    setNotifications((prev) =>
+      prev.map((notification) =>
+        notification.id === id ? { ...notification, open: false } : notification
+      )
+    );
+
     // Supprimer la notification après l'animation de sortie
     setTimeout(() => {
-      setNotifications(prev => prev.filter(notification => notification.id !== id));
+      setNotifications((prev) =>
+        prev.filter((notification) => notification.id !== id)
+      );
     }, 300);
   };
 
   return (
-    <NotificationContext.Provider value={{ showNotification, closeNotification }}>
+    <NotificationContext.Provider
+      value={{ showNotification, closeNotification }}
+    >
       {children}
       <div className="fixed right-4 top-4 z-50 flex flex-col gap-2">
         <AnimatePresence>
@@ -191,7 +209,9 @@ export function NotificationProvider({ children }: NotificationProviderProps) {
 export function useNotification() {
   const context = React.useContext(NotificationContext);
   if (context === undefined) {
-    throw new Error('useNotification must be used within a NotificationProvider');
+    throw new Error(
+      "useNotification must be used within a NotificationProvider"
+    );
   }
   return context;
 }

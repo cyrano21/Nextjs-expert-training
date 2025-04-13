@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { cookies } from 'next/headers';
+import { getAuthSession } from '@/lib/auth/authUtils';
 
 // Schéma de validation pour les données de progression
 const progressSchema = z.object({
@@ -37,44 +37,18 @@ const authSchema = z.object({
 // Utility function for authentication
 async function authenticateUser(userId: string) {
   try {
-    // Check for authentication tokens in cookies
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get('accessToken')?.value;
-    const userRole = cookieStore.get('userRole')?.value;
-
-    // Validate user ID and role
-    const validationResult = authSchema.safeParse({ 
-      userId, 
-      role: userRole 
-    });
-
-    if (!validationResult.success) {
-      return { 
-        authenticated: false, 
-        error: validationResult.error.errors[0].message 
-      };
+    // Use getAuthSession to validate user
+    const session = await getAuthSession();
+    
+    // Check if the authenticated user matches the provided userId
+    if (!session?.user || session.user.id !== userId) {
+      throw new Error('Unauthorized');
     }
 
-    // Check for valid access token
-    if (!accessToken) {
-      return { 
-        authenticated: false, 
-        error: 'Authentication token missing' 
-      };
-    }
-
-    // Additional token validation could be added here
-    return { 
-      authenticated: true, 
-      role: userRole 
-    };
-
+    return session.user;
   } catch (error) {
-    console.error('Authentication error:', error);
-    return { 
-      authenticated: false, 
-      error: 'Authentication failed' 
-    };
+    console.error('Authentication failed:', error);
+    throw new Error('Authentication failed');
   }
 }
 
@@ -96,11 +70,11 @@ export async function updateLessonProgress(formData: FormData | Record<string, u
     }
 
     // Authenticate user
-    const authResult = await authenticateUser(userId);
-    if (!authResult.authenticated) {
+    const user = await authenticateUser(userId);
+    if (!user) {
       return { 
         success: false, 
-        error: authResult.error 
+        error: 'Authentication failed' 
       };
     }
 
@@ -134,11 +108,11 @@ export async function updateLessonProgress(formData: FormData | Record<string, u
  */
 export async function getUserProgress(userId: string) {
   // Authenticate user
-  const authResult = await authenticateUser(userId);
-  if (!authResult.authenticated) {
+  const user = await authenticateUser(userId);
+  if (!user) {
     return { 
       success: false, 
-      error: authResult.error 
+      error: 'Authentication failed' 
     };
   }
 
@@ -204,4 +178,30 @@ export async function getUserProgress(userId: string) {
       data: null 
     };
   }
+}
+
+// Server action to mark lesson as completed
+export async function markLessonCompleteAction(data: LessonProgressData) {
+  // Validate input data
+  const validationResult = progressSchema.safeParse(data);
+  if (!validationResult.success) {
+    throw new Error('Invalid input data');
+  }
+
+  // Authenticate user
+  const session = await getAuthSession();
+  
+  // Verify user matches
+  if (session.user.id !== data.userId) {
+    throw new Error('Unauthorized');
+  }
+
+  // TODO: Implement actual lesson completion logic
+  // This might involve updating a database record
+  console.log(`Lesson ${data.lessonId} marked as completed for user ${session.user.id}`);
+
+  return {
+    success: true,
+    message: 'Lesson marked as completed',
+  };
 }

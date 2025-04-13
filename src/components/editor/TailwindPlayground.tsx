@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { MonacoEditor } from './MonacoEditor';
+import React, { useState, useEffect } from "react";
+import { MonacoEditor } from "./MonacoEditor";
 
 interface TailwindPlaygroundProps {
   defaultHtml?: string;
@@ -10,13 +10,13 @@ interface TailwindPlaygroundProps {
 
 export function TailwindPlayground({
   defaultHtml = '<div class="p-8 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">\n  <div class="flex-shrink-0">\n    <div class="h-12 w-12 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">T</div>\n  </div>\n  <div>\n    <div class="text-xl font-medium text-black">Tailwind CSS</div>\n    <p class="text-gray-500">Playground interactif</p>\n  </div>\n</div>',
-  defaultCss = '',
-  height = '400px',
-  showPreview = true
+  defaultCss = "",
+  height = "400px",
+  showPreview = true,
 }: TailwindPlaygroundProps) {
   const [html, setHtml] = useState(defaultHtml);
   const [css, setCss] = useState(defaultCss);
-  const [output, setOutput] = useState('');
+  const [output, setOutput] = useState("");
 
   useEffect(() => {
     // Combiner HTML et CSS pour la prévisualisation
@@ -49,19 +49,21 @@ export function TailwindPlayground({
           <MonacoEditor
             defaultLanguage="html"
             value={html}
-            onChange={(value) => setHtml(value || '')}
+            onChange={(value) => setHtml(value || "")}
             height={height}
             options={{
               minimap: { enabled: false },
               scrollBeyondLastLine: false,
-              wordWrap: 'on'
+              wordWrap: "on",
             }}
           />
         </div>
-        
+
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-medium">CSS personnalisé (optionnel)</h3>
+            <h3 className="text-sm font-medium">
+              CSS personnalisé (optionnel)
+            </h3>
             <div className="text-xs text-muted-foreground">
               Styles additionnels
             </div>
@@ -69,17 +71,17 @@ export function TailwindPlayground({
           <MonacoEditor
             defaultLanguage="css"
             value={css}
-            onChange={(value) => setCss(value || '')}
+            onChange={(value) => setCss(value || "")}
             height={height}
             options={{
               minimap: { enabled: false },
               scrollBeyondLastLine: false,
-              wordWrap: 'on'
+              wordWrap: "on",
             }}
           />
         </div>
       </div>
-      
+
       {showPreview && (
         <div className="space-y-2">
           <h3 className="text-sm font-medium">Prévisualisation</h3>
@@ -87,7 +89,7 @@ export function TailwindPlayground({
             <iframe
               title="Tailwind Preview"
               srcDoc={output}
-              style={{ width: '100%', height: '100%', border: 'none' }}
+              className="w-full h-full border-none"
               sandbox="allow-scripts"
             />
           </div>

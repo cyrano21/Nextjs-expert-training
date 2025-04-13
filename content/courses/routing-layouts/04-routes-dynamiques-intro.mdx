@@ -1,0 +1,29 @@
+---
+title: "Introduction aux Routes Dynamiques"
+description: "Créer des routes dynamiques avec des paramètres variables"
+---
+
+# Introduction aux Routes Dynamiques
+
+Les routes dynamiques permettent de créer des pages qui dépendent de paramètres variables, comme des IDs ou des slugs.
+
+## Création d'une route dynamique
+
+Vous pouvez créer une route dynamique en plaçant un segment de route entre crochets:
+
+```
+app/produits/[id]/page.tsx
+```
+
+Cette page correspondra à des routes comme `/produits/1`, `/produits/2`, etc.
+
+## Accès aux paramètres
+
+Dans votre page, vous pouvez accéder aux paramètres dynamiques:
+
+```tsx
+export default function ProductPage({ params }) {
+  // params.id contiendra le paramètre dynamique
+  return <div>Produit ID: {params.id}</div>;
+}
+```

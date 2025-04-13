@@ -10,7 +10,7 @@ import type { Database } from "@/types/database.types";
 export default function Login() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") || "/student/dashboard";
+  const redirectTo = searchParams.get("callbackUrl") || "/student/dashboard";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,7 +76,7 @@ export default function Login() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/api/auth/callback?redirect=${redirectTo}`,
+          redirectTo: `${window.location.origin}/api/auth/callback?callbackUrl=${redirectTo}`,
         },
       });
 
@@ -85,8 +85,8 @@ export default function Login() {
       }
     } catch (err: unknown) {
       setError(
-        err instanceof Error 
-          ? err.message 
+        err instanceof Error
+          ? err.message
           : "Une erreur est survenue lors de la connexion"
       );
     } finally {

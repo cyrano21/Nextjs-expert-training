@@ -1,0 +1,43 @@
+---
+title: "Mode Sombre Simplifié"
+description: "Implémenter un mode sombre avec Tailwind CSS"
+---
+
+# Mode Sombre Simplifié
+
+Tailwind facilite l'ajout du mode sombre à votre application avec le préfixe `dark:`.
+
+## Configuration
+
+Dans votre fichier `tailwind.config.js`, activez le mode sombre:
+
+```javascript
+module.exports = {
+  darkMode: 'class', // ou 'media' pour utiliser la préférence du système
+  // reste de la config...
+}
+```
+
+## Utilisation
+
+```html
+<div class="
+  bg-white text-black
+  dark:bg-gray-800 dark:text-white
+">
+  Ce texte est noir sur fond blanc en mode clair, 
+  et blanc sur fond gris foncé en mode sombre.
+</div>
+```
+
+## Commutation du Mode
+
+Vous pouvez ajouter/supprimer la classe `dark` sur l'élément `html` pour basculer entre les modes:
+
+```javascript
+// Activer le mode sombre
+document.documentElement.classList.add('dark');
+
+// Désactiver le mode sombre
+document.documentElement.classList.remove('dark');
+```

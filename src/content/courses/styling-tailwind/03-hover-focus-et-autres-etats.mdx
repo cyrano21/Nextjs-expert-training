@@ -1,0 +1,77 @@
+---
+title: "Styles Interactifs : Hover, Focus et Plus !"
+description: "Rendez vos interfaces plus vivantes en appliquant des styles différents lorsque l'utilisateur interagit avec les éléments (survol, focus, etc.)."
+tags: ['tailwind css', 'css', 'pseudo-classes', 'hover', 'focus', 'styling', 'beginner']
+estimatedTimeMinutes: 15
+objectives:
+  - Expliquer le rôle des modificateurs d'état dans Tailwind.
+  - Appliquer des styles au survol (`hover:`).
+  - Appliquer des styles lorsqu'un élément a le focus (`focus:`).
+  - Mentionner d'autres états utiles (`active:`, `disabled:`, `group-hover:`).
+  - (Activité) Ajouter des états interactifs à un bouton dans le Playground.
+---
+
+import { InfoTip, CodeBlock, Quiz, TailwindPlayground } from '@/components/mdx';
+
+# Donnez du Feedback Visuel : Les États Interactifs ✨🖱️
+
+Un bon design réagit à l'utilisateur ! Quand on survole un bouton, il devrait *montrer* qu'il est cliquable. Quand on sélectionne un champ de formulaire, il devrait se distinguer. C'est là qu'interviennent les **modificateurs d'état** de Tailwind.
+
+Ce sont des préfixes que vous ajoutez *avant* une classe utilitaire pour qu'elle ne s'applique que dans une situation précise.
+
+**Syntaxe : `{état}:{utilitaire}`**
+
+## L'État `hover:` (Survol de la Souris)
+
+C'est le plus courant. Il applique un style uniquement lorsque le curseur de la souris est **sur** l'élément.
+
+<CodeBlock language="html" title="Exemple avec hover:">
+<button class="
+  bg-blue-500    /* Style par défaut */
+  text-white
+  py-2 px-4
+  rounded
+  transition-colors /* Pour une transition douce */
+  hover:bg-blue-700 /* Style appliqué AU SURVOL */
+">
+  Survolez-moi !
+</button>
+</CodeBlock>
+
+Ici, le fond du bouton devient plus foncé au survol. La classe `transition-colors` (non liée à `hover:` mais souvent utilisée avec) rend ce changement de couleur plus agréable.
+
+## L'État `focus:` (Élément Sélectionné)
+
+Cet état s'applique lorsqu'un élément reçoit le **focus**, typiquement via la navigation au clavier (touche Tab) ou en cliquant sur un champ de formulaire (`<input>`, `<textarea>`, `<button>`). C'est crucial pour l'accessibilité !
+
+<CodeBlock language="html" title="Exemple avec focus:">
+<input type="text" class="
+  border-gray-300 /* Bordure par défaut */
+  rounded px-3 py-1
+  focus:border-blue-500 /* Bordure bleue AU FOCUS */
+  focus:ring-2          /* Ajoute un 'anneau' de couleur */
+  focus:ring-blue-300   /* Couleur de l'anneau */
+  focus:outline-none    /* Supprime l'outline moche par défaut */
+" placeholder="Cliquez ou Tabbulez ici" />
+</CodeBlock>
+
+Ici, lorsque l'input a le focus, sa bordure devient bleue et un anneau bleu clair apparaît autour, indiquant clairement qu'il est sélectionné. `focus:outline-none` est souvent utilisé pour remplacer l'outline par défaut du navigateur par un style `focus:ring-*` plus esthétique.
+
+## Autres États Utiles (Aperçu Rapide)
+
+*   **`active:`**: S'applique lorsqu'un élément est **activement pressé** (pendant le clic de souris ou la pression sur Espace/Entrée). Souvent utilisé pour un léger effet d'enfoncement (`active:scale-95`).
+*   **`disabled:`**: S'applique aux éléments de formulaire désactivés (avec l'attribut HTML `disabled`). Utile pour les griser (`disabled:opacity-50`, `disabled:cursor-not-allowed`).
+*   **`group-hover:`**: Magique ! Applique un style à un élément **enfant** lorsque le **parent** marqué avec la classe `group` est survolé. Parfait pour afficher une icône ou changer une couleur dans une carte au survol de la carte entière.
+
+<CodeBlock language="html" title="Exemple avec group-hover:">
+<div class="group border rounded p-4 hover:bg-gray-100"> {/* Parent avec 'group' */}
+  <h3 class="font-bold">Titre de la Carte</h3>
+  <p class="text-gray-600 group-hover:text-black"> {/* Le texte change quand la DIV est survolée */}
+     Contenu qui devient noir au survol de la carte.
+  </p>
+</div>
+</CodeBlock>
+
+<InfoTip type="info">
+Il existe de nombreux autres modificateurs d'état (`visited:`, `checked:`, `first:`, `last:`, etc.). Explorez la [documentation Tailwind sur les états](https://tailwindcss.com/docs/hover-focus-and-other-states) pour les découvrir !
+</InfoTip>

@@ -1,0 +1,21 @@
+---
+title: "Props: La Communication entre Composants"
+description: "Apprendre à passer et utiliser des props dans les composants React"
+---
+
+# Props: La Communication entre Composants
+
+Les "props" sont le moyen de passer des données d'un composant parent à un composant enfant.
+
+## Passage de Props
+
+```jsx
+function Salutation(props) {
+  return <h1>Bonjour, {props.nom}!</h1>;
+}
+
+// Utilisation
+<Salutation nom="Marie" />
+```
+
+Les props sont en lecture seule et ne doivent pas être modifiées par le composant qui les reçoit.

@@ -1,0 +1,230 @@
+---
+title: "Les Utilitaires Essentiels de Tailwind"
+description: "Découvrir les classes utilitaires les plus courantes de Tailwind CSS"
+---
+
+# Les Utilitaires Essentiels de Tailwind
+
+Tailwind fournit des centaines de classes utilitaires pour tous les aspects du style.
+
+## Layout
+
+- `flex`, `grid`, `block`, `inline`, `hidden`, etc.
+
+<CodeCanvas
+  title="Layout avec Tailwind"
+  description="Essayez différentes classes de layout"
+  language="html"
+  height="350px"
+  initialCode={`<!-- Expérimentez avec les classes flex -->
+<div class="flex space-x-4 p-4 bg-gray-100 rounded-lg">
+  <div class="bg-blue-500 p-4 text-white rounded">Item 1</div>
+  <div class="bg-blue-500 p-4 text-white rounded">Item 2</div>
+  <div class="bg-blue-500 p-4 text-white rounded">Item 3</div>
+</div>
+
+<!-- Essayez les classes grid -->
+<div class="grid grid-cols-3 gap-4 mt-4 p-4 bg-gray-100 rounded-lg">
+  <div class="bg-green-500 p-4 text-white rounded">Grille 1</div>
+  <div class="bg-green-500 p-4 text-white rounded">Grille 2</div>
+  <div class="bg-green-500 p-4 text-white rounded">Grille 3</div>
+  <div class="bg-green-500 p-4 text-white rounded">Grille 4</div>
+  <div class="bg-green-500 p-4 text-white rounded">Grille 5</div>
+  <div class="bg-green-500 p-4 text-white rounded">Grille 6</div>
+</div>
+
+<!-- Essayez d'ajouter d'autres layouts ou de modifier ceux-ci -->
+`}
+/>
+
+## Espacement
+
+- `p-4` (padding), `m-2` (margin), `gap-3` (gap), etc.
+
+<CodeCanvas
+  title="Espacement avec Tailwind"
+  description="Expérimentez avec les marges et paddings"
+  language="html"
+  height="300px"
+  initialCode={`<div class="space-y-4 bg-gray-100 p-6 rounded-lg">
+  <!-- Padding (p-) -->
+  <div class="bg-white rounded shadow">
+    <div class="bg-blue-100 p-2">p-2 (padding: 0.5rem)</div>
+  </div>
+  
+  <div class="bg-white rounded shadow">
+    <div class="bg-blue-100 p-4">p-4 (padding: 1rem)</div>
+  </div>
+  
+  <div class="bg-white rounded shadow">
+    <div class="bg-blue-100 p-8">p-8 (padding: 2rem)</div>
+  </div>
+  
+  <!-- Marge (m-) -->
+  <div class="bg-white p-4 rounded shadow">
+    <div class="bg-red-100 inline-block">Élément de base</div>
+    <div class="bg-red-100 inline-block ml-2">ml-2</div>
+    <div class="bg-red-100 inline-block ml-4">ml-4</div>
+    <div class="bg-red-100 inline-block ml-8">ml-8</div>
+  </div>
+</div>
+`}
+/>
+
+## Typographie
+
+- `text-xl` (taille), `font-bold` (graisse), `italic` (style), etc.
+
+<CodeCanvas
+  title="Typographie avec Tailwind"
+  description="Essayez différentes classes de typographie"
+  language="html"
+  height="400px"
+  initialCode={`<div class="p-6 bg-gray-100 space-y-6 rounded-lg font-sans">
+  <!-- Tailles de texte -->
+  <div>
+    <p class="text-xs">text-xs: Texte très petit</p>
+    <p class="text-sm">text-sm: Texte petit</p>
+    <p class="text-base">text-base: Texte normal</p>
+    <p class="text-lg">text-lg: Texte grand</p>
+    <p class="text-xl">text-xl: Texte très grand</p>
+    <p class="text-2xl">text-2xl: Texte énorme</p>
+  </div>
+  
+  <!-- Graisse de police -->
+  <div>
+    <p class="font-thin">font-thin: Texte très fin</p>
+    <p class="font-normal">font-normal: Texte normal</p>
+    <p class="font-medium">font-medium: Texte moyen</p>
+    <p class="font-bold">font-bold: Texte gras</p>
+    <p class="font-black">font-black: Texte très gras</p>
+  </div>
+  
+  <!-- Styles de texte -->
+  <div>
+    <p class="italic">italic: Texte italique</p>
+    <p class="underline">underline: Texte souligné</p>
+    <p class="line-through">line-through: Texte barré</p>
+    <p class="uppercase">uppercase: TEXTE EN MAJUSCULES</p>
+    <p class="lowercase">LOWERCASE: texte en minuscules</p>
+    <p class="capitalize">capitalize: Première lettre en majuscule</p>
+  </div>
+</div>
+`}
+/>
+
+## Couleurs
+
+- `text-blue-500` (couleur de texte), `bg-red-100` (couleur de fond), etc.
+
+<CodeCanvas
+  title="Couleurs avec Tailwind"
+  description="Expérimentez avec les couleurs de Tailwind"
+  language="html"
+  height="450px"
+  initialCode={`<div class="p-6 space-y-6 bg-white rounded-lg shadow">
+  <!-- Couleurs de fond (bg-) -->
+  <div class="grid grid-cols-3 gap-2">
+    <div class="bg-red-500 p-4 text-white rounded">bg-red-500</div>
+    <div class="bg-blue-500 p-4 text-white rounded">bg-blue-500</div>
+    <div class="bg-green-500 p-4 text-white rounded">bg-green-500</div>
+    <div class="bg-yellow-500 p-4 text-white rounded">bg-yellow-500</div>
+    <div class="bg-purple-500 p-4 text-white rounded">bg-purple-500</div>
+    <div class="bg-pink-500 p-4 text-white rounded">bg-pink-500</div>
+  </div>
+  
+  <!-- Variations d'intensité -->
+  <div class="space-y-2">
+    <div class="bg-blue-100 p-2 rounded">bg-blue-100</div>
+    <div class="bg-blue-200 p-2 rounded">bg-blue-200</div>
+    <div class="bg-blue-300 p-2 rounded">bg-blue-300</div>
+    <div class="bg-blue-400 p-2 text-white rounded">bg-blue-400</div>
+    <div class="bg-blue-500 p-2 text-white rounded">bg-blue-500</div>
+    <div class="bg-blue-600 p-2 text-white rounded">bg-blue-600</div>
+    <div class="bg-blue-700 p-2 text-white rounded">bg-blue-700</div>
+    <div class="bg-blue-800 p-2 text-white rounded">bg-blue-800</div>
+    <div class="bg-blue-900 p-2 text-white rounded">bg-blue-900</div>
+  </div>
+  
+  <!-- Couleurs de texte (text-) -->
+  <div class="grid grid-cols-3 gap-2 bg-gray-100 p-4 rounded">
+    <p class="text-red-500">text-red-500</p>
+    <p class="text-blue-500">text-blue-500</p>
+    <p class="text-green-500">text-green-500</p>
+    <p class="text-yellow-500">text-yellow-500</p>
+    <p class="text-purple-500">text-purple-500</p>
+    <p class="text-pink-500">text-pink-500</p>
+  </div>
+</div>
+`}
+/>
+
+## Bordures et arrondis
+
+- `border`, `border-2`, `rounded-lg`, etc.
+
+<CodeCanvas
+  title="Bordures avec Tailwind"
+  description="Essayez différents styles de bordures"
+  language="html"
+  height="350px"
+  initialCode={`<div class="p-6 space-y-6 bg-gray-100 rounded-lg">
+  <!-- Épaisseurs de bordures -->
+  <div class="grid grid-cols-4 gap-4">
+    <div class="border bg-white p-4 rounded">border</div>
+    <div class="border-2 bg-white p-4 rounded">border-2</div>
+    <div class="border-4 bg-white p-4 rounded">border-4</div>
+    <div class="border-8 bg-white p-4 rounded">border-8</div>
+  </div>
+  
+  <!-- Couleurs de bordures -->
+  <div class="grid grid-cols-3 gap-4">
+    <div class="border-2 border-blue-500 bg-white p-4 rounded">border-blue-500</div>
+    <div class="border-2 border-red-500 bg-white p-4 rounded">border-red-500</div>
+    <div class="border-2 border-green-500 bg-white p-4 rounded">border-green-500</div>
+  </div>
+  
+  <!-- Arrondis (border-radius) -->
+  <div class="grid grid-cols-4 gap-4">
+    <div class="bg-blue-500 p-4 text-white rounded-none">rounded-none</div>
+    <div class="bg-blue-500 p-4 text-white rounded">rounded</div>
+    <div class="bg-blue-500 p-4 text-white rounded-lg">rounded-lg</div>
+    <div class="bg-blue-500 p-4 text-white rounded-full">rounded-full</div>
+  </div>
+</div>
+`}
+/>
+
+## Composez vos propres designs
+
+Maintenant que vous connaissez les utilitaires essentiels, essayez de créer votre propre design en combinant ces classes:
+
+<CodeCanvas
+  title="Créez votre design avec Tailwind"
+  description="Combinez les classes utilitaires pour créer un design personnalisé"
+  language="html"
+  height="500px"
+  initialCode={`<!-- Créez une carte de profil, une bannière, ou tout autre élément d'interface -->
+<div class="p-6 bg-gray-100 min-h-full">
+  <!-- C'est votre espace ! Remplacez ce commentaire par votre code. -->
+  <!-- Voici une structure de base pour commencer : -->
+  
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="p-8">
+      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Company</div>
+      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Titre du design</a>
+      <p class="mt-2 text-gray-500">Description de votre design. Utilisez votre créativité !</p>
+    </div>
+  </div>
+  
+</div>
+`}
+/>
+
+## Ressources Tailwind CSS
+
+- [Documentation officielle](https://tailwindcss.com/docs)
+- [Cheat Sheet Tailwind](https://nerdcave.com/tailwind-cheat-sheet)
+- [Composants Tailwind UI](https://tailwindui.com/components)
+
+N'hésitez pas à consulter ces ressources pour approfondir vos connaissances sur Tailwind CSS.

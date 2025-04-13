@@ -1,0 +1,177 @@
+---
+title: "JSX, Késako ?"
+description: "Comprendre JSX, la syntaxe utilisée dans React"
+---
+
+# JSX, Késako ?
+
+JSX est une extension de syntaxe pour JavaScript qui ressemble à du HTML mais avec toute la puissance de JavaScript.
+
+## Pourquoi JSX ?
+
+JSX nous permet d'écrire des éléments HTML dans JavaScript et de les placer dans le DOM sans avoir à utiliser `createElement()` ou `appendChild()`.
+
+## Syntaxe de base
+
+JSX ressemble à du HTML, mais il est en fait transformé en JavaScript lors de la compilation. Voici un exemple simple :
+
+```jsx
+const element = <h1>Bonjour, monde !</h1>;
+```
+
+Essayez vous-même avec l'éditeur interactif ci-dessous :
+
+<CodeCanvas
+  title="JSX en action"
+  description="Modifiez le code JSX et observez le résultat en temps réel"
+  language="jsx"
+  height="300px"
+  initialCode={`function Salutation() {
+  return <h1>Bonjour, Expert Academy !</h1>;
+}
+
+// Ce code sera rendu dans la prévisualisation
+function App() {
+  return (
+    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+      <Salutation />
+      <p>Bienvenue dans le monde de JSX !</p>
+    </div>
+  );
+}`}
+/>
+
+## Expressions en JSX
+
+Vous pouvez insérer n'importe quelle expression JavaScript valide dans JSX en l'entourant d'accolades `{}`.
+
+```jsx
+const nom = 'Expert Academy';
+const element = <h1>Bonjour, {nom}</h1>;
+```
+
+### Essayez avec des variables et des expressions :
+
+<CodeCanvas
+  title="Expressions JSX"
+  description="Modifiez les variables et expressions dans ce code JSX"
+  language="jsx"
+  height="350px"
+  initialCode={`function ExpressionDemo() {
+  const nom = 'Expert Academy';
+  const utilisateur = { prenom: 'Sophie', niveau: 'débutant' };
+  const afficherDate = true;
+  
+  return (
+    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+      <h1>Bonjour, {nom} !</h1>
+      <p>Bienvenue {utilisateur.prenom}, vous êtes de niveau {utilisateur.niveau}</p>
+      {afficherDate && 
+        <p>Nous sommes le {new Date().toLocaleDateString('fr-FR')}</p>
+      }
+      
+      {/* Essayez de modifier les variables ci-dessus ou d'ajouter vos propres expressions ! */}
+    </div>
+  );
+}
+
+// Rendu du composant
+function App() {
+  return <ExpressionDemo />;
+}`}
+/>
+
+## Attributs en JSX
+
+Vous pouvez spécifier des attributs avec JSX, mais attention à ces différences par rapport au HTML :
+- Les attributs utilisent la convention camelCase
+- `class` devient `className` en JSX
+- Les accolades `{}` sont utilisées pour les valeurs non-textuelles
+
+### Essayez différents attributs :
+
+<CodeCanvas
+  title="Attributs JSX"
+  description="Expérimentez avec différents attributs JSX"
+  language="jsx"
+  height="350px"
+  initialCode={`function AttributsDemo() {
+  const couleurBouton = 'blue';
+  
+  return (
+    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+      {/* className au lieu de class */}
+      <h1 className="titre-principal">Styliser avec JSX</h1>
+      
+      {/* style prend un objet JavaScript */}
+      <p style={{ 
+        color: 'darkblue', 
+        fontSize: '18px',
+        marginBottom: '15px' 
+      }}>
+        Les styles inline utilisent des objets JavaScript
+      </p>
+      
+      {/* Les attributs utilisent camelCase */}
+      <button 
+        style={{ 
+          backgroundColor: couleurBouton, 
+          color: 'white',
+          padding: '10px 15px',
+          border: 'none',
+          borderRadius: '4px'
+        }}
+        onClick={() => alert('Bouton cliqué !')}
+      >
+        Cliquez-moi
+      </button>
+      
+      {/* Essayez de modifier les styles ou d'ajouter d'autres éléments stylisés */}
+    </div>
+  );
+}
+
+// Rendu du composant
+function App() {
+  return <AttributsDemo />;
+}`}
+/>
+
+## Points importants à retenir
+
+1. JSX n'est pas du HTML, même s'il y ressemble
+2. JSX est plus proche de JavaScript que de HTML
+3. Vous pouvez utiliser toute la puissance de JavaScript dans votre JSX
+4. JSX facilite la création d'interfaces utilisateur dans React
+
+## Pour aller plus loin
+
+Utilisez l'éditeur ci-dessous pour créer votre propre composant JSX. Essayez de combiner plusieurs éléments, d'utiliser des expressions et d'appliquer des styles :
+
+<CodeCanvas
+  title="Votre composant JSX"
+  description="Créez votre propre composant en utilisant JSX"
+  language="jsx"
+  height="400px"
+  initialCode={`// Créez votre propre composant ici
+function MonComposant() {
+  // Vous pouvez déclarer des variables et fonctions ici
+  
+  return (
+    // Votre JSX ici
+    <div>
+      <h1>Mon super composant</h1>
+      <p>Remplacez ce contenu par votre création</p>
+    </div>
+  );
+}
+
+// Rendu de votre composant
+function App() {
+  return (
+    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+      <MonComposant />
+    </div>
+  );
+}`}
+/>

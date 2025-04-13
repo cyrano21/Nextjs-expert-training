@@ -43,3 +43,13 @@ next-env.d.ts
 
 *storybook.log
 .qodo
+
+# Additional debugging files
+C:\Temp\next-panic-*.log
+*.log.json
+
+# IDE files
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

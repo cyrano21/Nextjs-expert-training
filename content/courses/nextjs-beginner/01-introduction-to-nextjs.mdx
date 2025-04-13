@@ -1,0 +1,135 @@
+---
+title: "Bienvenue dans le Nexus : Qu'est-ce que Next.js ?"
+description: "Votre première étape ! Découvrez pourquoi Next.js est un outil puissant pour construire le web de demain et lancez votre premier projet."
+tags: ['nextjs', 'introduction', 'setup', 'beginner', 'react framework']
+estimatedTimeMinutes: 15
+objectives:
+  - Définir Next.js et son rôle.
+  - Lister 3 avantages clés de Next.js.
+  - Créer un projet Next.js via `create-next-app`.
+  - Lancer le serveur de développement.
+---
+
+import { InfoTip, CodeBlock, Quiz, ProjectStep, TerminalOutput, AchievementUnlocked } from '@/components/mdx';
+
+# Prêt pour le Décollage ? Bienvenue dans Next.js Nexus ! 👋
+
+Félicitations d'avoir rejoint **Next.js Nexus**, votre centre d'entraînement pour maîtriser l'un des outils les plus excitants du développement web ! 🚀
+
+Vous avez entendu parler de **React** ? Cette formidable bibliothèque pour construire des interfaces utilisateur interactives ? Eh bien, **Next.js** est comme son **super-costume** ! C'est un **Framework React pour la Production**, ce qui signifie qu'il prend la puissance de React et y ajoute une structure, des outils et des super-pouvoirs pour construire des applications web **rapides, robustes et modernes** plus facilement.
+
+<InfoTip type="idea" title="Encore l'analogie Lego !">
+Si React est la boîte de briques Lego, Next.js est le **kit complet** avec les instructions claires (routage facile), les pièces spéciales pré-assemblées (optimisation d'images, rendu serveur) et même une base solide pour construire votre chef-d'œuvre (meilleur SEO, performance).
+</InfoTip>
+
+## Les Super-Pouvoirs de Next.js ✨
+
+Pourquoi tant d'engouement ? Voici quelques raisons :
+
+*   🏎️ **Vitesse Éclair :** Next.js est obsédé par la performance. Rendu côté serveur (SSR), génération statique (SSG), code intelligent divisé... tout pour que vos sites se chargent à la vitesse de la lumière !
+*   💡 **Expérience Développeur Magique (DX) :** Des outils comme le "Fast Refresh" (votre code se met à jour instantanément sans perdre l'état !) rendent le développement fluide et agréable. C'est presque de la magie !
+*   🤖 **Ami des Moteurs de Recherche (SEO) :** Grâce au pré-rendu, Google et les autres comprennent mieux votre site, ce qui améliore votre visibilité.
+*   📁 **Routage Simplifié :** Créez une page ? Créez un dossier ! L'organisation de vos pages est logique et basée sur les fichiers.
+*   🛠️ **Tout-en-Un (Full-Stack) :** Besoin d'une petite API pour votre application ? Vous pouvez la créer directement dans votre projet Next.js. Pratique !
+
+## Votre Mission (Si vous l'acceptez !)
+
+Dans ce premier module, nous allons :
+
+1.  **Installer les outils** et créer votre tout premier projet Next.js (c'est parti !).
+2.  Faire un **tour du propriétaire** du code généré.
+3.  Comprendre comment **lancer et voir** votre application localement.
+
+Accrochez-vous, l'aventure commence maintenant !
+
+## Action ! Créons Votre Application "Nexus"
+
+Assez parlé, place à la pratique ! On utilise l'outil officiel `create-next-app`.
+
+<ProjectStep title="1. Préparez Votre Terminal" id="setup-terminal">
+
+*   Ouvrez votre **terminal** (ou Invite de commandes sur Windows, ou Terminal sur Mac/Linux).
+*   Utilisez la commande `cd` pour naviguer vers un dossier où vous rangez vos projets (par exemple, `cd Documents/projets-web`).
+
+</ProjectStep>
+
+<ProjectStep title="2. Lancez la Création Magique !" id="setup-create">
+
+1.  Tapez (ou copiez-collez) cette commande et appuyez sur Entrée :
+
+    <CodeBlock language="bash" title="Terminal" allowCopy>
+    npx create-next-app@latest my-nexus-app
+    </CodeBlock>
+    *`npx` exécute la dernière version de l'outil sans l'installer globalement.*
+
+2.  **Répondez aux questions** (on garde les valeurs par défaut recommandées pour l'instant) :
+    *   `✔ Would you like to use TypeScript?` › **Yes** (Appuyez sur Entrée)
+    *   `✔ Would you like to use ESLint?` › **Yes** (Appuyez sur Entrée)
+    *   `✔ Would you like to use Tailwind CSS?` › **Yes** (Appuyez sur Entrée)
+    *   `✔ Would you like to use \`src/\` directory?` › **Yes** (Appuyez sur Entrée)
+    *   `✔ Would you like to use App Router? (recommended)` › **Yes** (Appuyez sur Entrée)
+    *   `✔ Would you like to customize the default import alias (@/*)?` › **No** (Appuyez sur Entrée)
+
+    Laissez la magie opérer pendant l'installation... ✨
+
+</ProjectStep>
+
+<ProjectStep title="3. Entrez dans Votre Nouveau Projet" id="setup-cd">
+
+*   Une fois terminé, déplacez-vous dans le dossier qui vient d'être créé :
+    <CodeBlock language="bash" title="Terminal" allowCopy>
+    cd my-nexus-app
+    </CodeBlock>
+
+</ProjectStep>
+
+<ProjectStep title="4. Démarrez le Moteur !" id="setup-dev">
+
+1.  Lancez le serveur de développement :
+    <CodeBlock language="bash" title="Terminal" allowCopy>
+    npm run dev
+    </CodeBlock>
+
+2.  Observez la console, elle devrait afficher quelque chose comme :
+
+    <TerminalOutput>
+    ✓ Ready in x.xxs
+    ○ Compiling / ...
+    ✓ Compiled /page in x.xxs
+    ✓ Ready on http://localhost:3000
+    </TerminalOutput>
+
+3.  **Visitez votre création :** Ouvrez votre navigateur web et allez à l'adresse `http://localhost:3000`.
+
+    Vous devriez voir la page de bienvenue de Next.js !
+
+    <AchievementUnlocked title="Premier Lancement Réussi !" points={10}>
+       Vous avez créé et lancé votre première application Next.js ! C'est une étape majeure. Prenez un moment pour savourer cette victoire ! 🥳
+    </AchievementUnlocked>
+
+</ProjectStep>
+
+## Test Rapide des Connaissances 🧠
+
+Validons ce que vous venez d'apprendre.
+
+<Quiz
+  questionId="intro-q1-benefits"
+  question="Lequel de ces avantages est une caractéristique clé de Next.js mentionnée plus tôt ?"
+  options={[
+    "Un éditeur de code intégré.",
+    "Des options intégrées pour améliorer la performance et le SEO (comme SSR/SSG).",
+    "Une base de données incluse par défaut.",
+    "Un système de design visuel (drag-and-drop)."
+  ]}
+  correctAnswer={1}
+  explanation="Next.js brille par ses fonctionnalités intégrées pour le rendu serveur (SSR), la génération statique (SSG), l'optimisation d'images, etc., qui contribuent directement à la performance et au SEO."
+/>
+
+## Prêt pour la Suite ?
+
+Excellent travail ! Vous avez posé la première pierre.
+
+Dans la prochaine leçon, nous allons ouvrir le capot de `my-nexus-app` pour comprendre comment tout cela est organisé.
+
+Cliquez sur **"Leçon Suivante"** pour continuer l'exploration ! 👇

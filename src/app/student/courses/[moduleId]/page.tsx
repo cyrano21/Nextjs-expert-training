@@ -8,26 +8,28 @@ import CourseHeader from "@/components/courses/CourseHeader";
 import { getAuthSession } from "@/lib/auth/authUtils";
 import { Button } from "@/components/ui/button";
 
-type Props = {
+interface CoursePageProps {
   params: {
-    slug: string;
+    moduleId: string;
   };
-};
+}
 
 // Utiliser la nouvelle API pour générer les métadonnées
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: CoursePageProps): Promise<Metadata> {
   try {
     // Attendre les paramètres avant de les utiliser
     const resolvedParams = await Promise.resolve(params);
 
-    if (!resolvedParams?.slug) {
+    if (!resolvedParams?.moduleId) {
       return {
         title: "Course Not Found",
         description: "The requested course could not be found",
       };
     }
 
-    const course = await getCourseBySlug(resolvedParams.slug);
+    const course = await getCourseBySlug(resolvedParams.moduleId);
 
     if (!course) {
       return {
@@ -49,20 +51,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function CourseDetailPage({ params }: Props) {
+export default async function CoursePage({ params }: CoursePageProps) {
   try {
     // Attendre les paramètres avant de les utiliser
     const resolvedParams = await Promise.resolve(params);
 
-    if (!resolvedParams?.slug) {
+    if (!resolvedParams?.moduleId) {
       notFound();
     }
 
     // Vérifier l'authentification de l'utilisateur
     await getAuthSession("student");
 
-    // Utiliser le slug résolu
-    const course = await getCourseBySlug(resolvedParams.slug);
+    // Utiliser le moduleId résolu
+    const course = await getCourseBySlug(resolvedParams.moduleId);
 
     if (!course) {
       notFound();
@@ -75,7 +77,7 @@ export default async function CourseDetailPage({ params }: Props) {
         <CourseContent course={course} />
         <div className="mt-6 flex space-x-4">
           <Button asChild>
-            <Link href={`/student/learn/${course.slug}`}>
+            <Link href={`/student/learn/${course.moduleId || params.moduleId}`}>
               Commencer l&apos;apprentissage
             </Link>
           </Button>

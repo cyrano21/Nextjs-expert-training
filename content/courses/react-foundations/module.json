@@ -1,0 +1,27 @@
+{
+  "title": "Les Fondations de React",
+  "description": "Comprendre les concepts de base de React pour développer avec Next.js",
+  "order": 2,
+  "lessons": [
+    {
+      "slug": "01-jsx-kesako",
+      "title": "JSX, Késako ?",
+      "description": "Comprendre JSX, la syntaxe utilisée dans React"
+    },
+    {
+      "slug": "02-composants-fonctionnels",
+      "title": "Les Composants Fonctionnels",
+      "description": "Comprendre et créer des composants fonctionnels en React"
+    },
+    {
+      "slug": "03-props-la-communication",
+      "title": "Props: La Communication entre Composants",
+      "description": "Apprendre à passer et utiliser des props dans les composants React"
+    },
+    {
+      "slug": "04-composants-client-serveur-intro",
+      "title": "Introduction aux Composants Client et Serveur",
+      "description": "Comprendre la différence entre les composants client et serveur dans Next.js"
+    }
+  ]
+}

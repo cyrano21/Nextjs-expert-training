@@ -1,55 +1,36 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* stylelint-disable */
+import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { handleOAuthCallback } from '@/lib/auth/oauth-handler';
 
-import { NextResponse } from "next/server";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import type { Database } from "@/types/database.types";
+export const dynamic = 'force-dynamic';
 
-export const dynamic = "force-dynamic";
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  const code = url.searchParams.get('code');
+  const redirectTo = url.searchParams.get('callbackUrl') || '/student/dashboard';
 
-export async function GET(request: Request) {
-  // Journaliser pour le débogage
-  console.log("Callback OAuth appelé");
-  
-  const requestUrl = new URL(request.url);
-  const code = requestUrl.searchParams.get("code");
-  const redirectTo = requestUrl.searchParams.get("redirect") || "/student/dashboard";
-  
   if (!code) {
-    console.error("No code provided in callback");
     return NextResponse.redirect(
-      new URL("/auth/login?message=Paramètres%20de%20callback%20invalides", requestUrl.origin)
+      new URL(`/auth/login?message=${encodeURIComponent("Code d'autorisation manquant")}`, request.url)
     );
   }
-  
-  try {
-    // Créer un client Supabase pour le handler de route
-    const cookieStore = cookies();
-    const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore });
-    
-    // Échanger le code d'autorisation contre une session
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-    
-    if (error) {
-      console.error("Erreur lors de l'échange du code:", error);
-      return NextResponse.redirect(
-        new URL("/auth/login?message=Échec%20de%20l%27authentification", requestUrl.origin)
-      );
-    }
-    
-    // Journaliser le succès
-    console.log("Session créée avec succès:", data?.session ? "Session valide" : "Pas de session");
-    
-    // Authentification réussie, rediriger vers la destination demandée
-    return NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
-    
-  } catch (error: any) {
-    console.error("Erreur dans le callback d'authentification:", error?.message || error);
+
+  const cookieStore = await cookies(); // ✅ await ici
+  const codeVerifier = cookieStore.get("sb-code-verifier")?.value;
+
+  if (!codeVerifier) {
     return NextResponse.redirect(
-      new URL("/auth/login?message=Erreur%20inattendue", requestUrl.origin)
+      new URL(`/auth/login?message=${encodeURIComponent("Code verifier manquant")}`, request.url)
     );
   }
+
+  const result = await handleOAuthCallback(code); // ✅ on passe seulement le code
+
+  if (!result.success) {
+    return NextResponse.redirect(
+      new URL(`/auth/login?message=${encodeURIComponent(result.error || 'Erreur OAuth')}`, request.url)
+    );
+  }
+
+  return NextResponse.redirect(new URL(redirectTo, request.url));
 }
-/* stylelint-enable */
-/* eslint-enable @typescript-eslint/no-explicit-any */

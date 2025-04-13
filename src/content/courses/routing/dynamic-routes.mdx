@@ -1,0 +1,105 @@
+---
+title: "Routes Dynamiques dans Next.js"
+description: "Apprenez à créer des routes dynamiques et à utiliser les paramètres d'URL dans vos applications Next.js"
+estimatedTimeMinutes: 15
+tags: ["next.js", "routage", "routes dynamiques", "paramètres", "app router"]
+---
+
+# Routes Dynamiques dans Next.js
+
+Les routes dynamiques sont un concept fondamental dans Next.js qui vous permet de créer des pages qui peuvent afficher différents contenus en fonction des paramètres dans l'URL. Cette fonctionnalité est essentielle pour construire des applications web modernes avec des URL conviviales et SEO-friendly.
+
+## Qu'est-ce qu'une Route Dynamique ?
+
+Une route dynamique est un chemin d'URL qui contient des segments variables. Par exemple, si vous créez un blog, vous pourriez avoir une route dynamique pour afficher chaque article :
+
+- `/blog/premiers-pas-avec-nextjs`
+- `/blog/comprendre-les-routes-dynamiques`
+- `/blog/deployer-sur-vercel`
+
+Au lieu de créer une page séparée pour chaque article, vous pouvez créer une seule page dynamique qui s'adapte en fonction de l'identifiant de l'article dans l'URL.
+
+## Créer des Routes Dynamiques avec App Router
+
+Dans le système App Router de Next.js, vous pouvez créer des routes dynamiques en utilisant des noms de dossiers entre crochets `[...]`. Voici comment procéder :
+
+### Exemple de base
+
+Pour créer une page dynamique pour les articles de blog :
+
+```
+app/
+  blog/
+    [slug]/
+      page.tsx
+```
+
+Dans ce cas, `[slug]` est un segment dynamique qui capture la valeur présente dans l'URL.
+
+### Récupération des paramètres
+
+Dans votre composant de page, vous pouvez accéder aux paramètres dynamiques comme suit :
+
+```tsx
+// app/blog/[slug]/page.tsx
+export default function BlogPost({ params }: { params: { slug: string } }) {
+  return <div>Mon article de blog: {params.slug}</div>;
+}
+```
+
+### Routes dynamiques avancées
+
+Vous pouvez également créer des routes avec plusieurs segments dynamiques :
+
+```
+app/
+  shop/
+    [category]/
+      [product]/
+        page.tsx
+```
+
+Cette structure vous permet de gérer des URL comme `/shop/electronics/iphone-15` où `electronics` est la catégorie et `iphone-15` est le produit.
+
+### Paramètres optionnels
+
+Pour créer un paramètre optionnel, vous pouvez utiliser la syntaxe `[[...slug]]` (double crochets) :
+
+```
+app/
+  [[...slug]]/
+    page.tsx
+```
+
+Cette configuration correspondra à `/`, `/about`, `/about/team`, etc.
+
+## Génération Statique avec getStaticPaths
+
+Pour les pages qui utilisent des routes dynamiques et nécessitent un pré-rendu, vous devez définir les chemins à générer à l'avance :
+
+```tsx
+// Pour les pages qui utilisent getStaticProps
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+```
+
+## Exercice pratique
+
+Essayez de créer une page dynamique qui affiche des détails sur un produit basé sur l'ID du produit fourni dans l'URL. Utilisez les étapes suivantes :
+
+1. Créez un dossier `app/products/[id]`
+2. Créez un fichier `page.tsx` dans ce dossier
+3. Utilisez `params.id` pour afficher les informations du produit
+
+## Conclusion
+
+Les routes dynamiques sont un outil puissant dans Next.js qui vous permettent de créer des applications web avec des URL propres et significatives tout en partageant la logique de rendu entre différentes pages qui suivent le même modèle.
+
+Elles sont particulièrement utiles pour les sites qui ont beaucoup de contenu, comme les blogs, les catalogues de produits, ou les portfolios.
+
+Dans la prochaine leçon, nous explorerons comment optimiser les performances de vos routes dynamiques et gérer les cas de chargement et d'erreur.

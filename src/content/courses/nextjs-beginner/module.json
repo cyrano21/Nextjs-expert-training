@@ -1,0 +1,35 @@
+{
+  "title": "Bienvenue dans l'Écosystème Web & Next.js",
+  "description": "Démystifier le développement web moderne et positionner Next.js. Installer les outils et créer le premier projet.",
+  "order": 1,
+  "lessons": [
+    {
+      "slug": "01-introduction-to-nextjs",
+      "title": "Bienvenue dans le Nexus : Qu'est-ce que Next.js ?",
+      "description": "Votre première étape ! Découvrez pourquoi Next.js est un outil puissant pour construire le web de demain et lancez votre premier projet."
+    },
+    {
+      "slug": "02-tour-du-proprietaire",
+      "title": "Tour du Propriétaire : Structure d'un Projet Next.js",
+      "description": "Explorons ensemble les dossiers et fichiers clés d'un projet Next.js pour comprendre où tout se trouve."
+    },
+    {
+      "slug": "03-html-css-js-recap",
+      "title": "Le Trio Fondateur : HTML, CSS & JavaScript",
+      "description": "Un rappel rapide sur les rôles essentiels de HTML, CSS et JavaScript, et comment React/Next.js s'appuient sur eux."
+    },
+    {
+      "slug": "04-developpement-local",
+      "title": "Votre Atelier de Dev : Serveur Local & Outils Navigateur",
+      "description": "Découvrez comment fonctionne le serveur de développement Next.js, la magie du Fast Refresh, et les outils essentiels de votre navigateur."
+    }
+  ],
+  "outcomes": [
+    "Comprendre ce qu'est Next.js et ses avantages",
+    "Explorer la structure d'un projet Next.js",
+    "Rappeler les fondamentaux HTML/CSS/JavaScript",
+    "Utiliser le serveur de développement local"
+  ],
+  "nextSteps": ["react-foundations"],
+  "prerequisites": []
+}
